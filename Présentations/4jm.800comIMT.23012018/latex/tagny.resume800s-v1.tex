@@ -1,0 +1,32 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage[left=3cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{graphicx, color, hyperref}
+\usepackage{eurosym}
+
+\graphicspath{ {fig/} }
+
+
+\author{Gildas T. N., Guillaume Z., Jacky M., Sébastien H., Stéphane M.}
+\title{\textbf{Rapport d'analyse du problème \\ \vspace{0.5cm} \normalsize \og Analyse Sémantique d'un Corpus Exhaustif de Décisions Jurisprudentielles pour l'Élaboration d'un Modèle Prédictif du Risque Judiciaire \fg{} }}
+
+\date{LGI2P(EMA) \& CHROME(UNIMES), Avril 2017}
+
+\begin{document}
+\nocite{}
+
+\maketitle
+
+Un corpus de décisions jurisprudentielles ou une jurisprudence est un ensemble de décisions rendues par les tribunaux et qui représente la manière dont les tribunaux interprètent le droit et les lois pour résoudre un problème juridique donné (type de contentieux). Les décisions sont des documents rédigés par des juges et par conséquence, elles regroupent les éléments de l'affaire que ces juges ont considérés pour répondre aux prétentions des parties. La compréhension des décisions tourne autour des prétentions des différentes parties et des réponses correspondantes des juges.
+
+Le problème posé dans notre cas vise principalement l'élaboration d'un modèle prédictif de conséquences judiciaires par l'analyse de jurisprudence. Plus précisément, comment peut-on partir de la jurisprudence d'un type de demande et anticiper le verdict des juges? L'approche est simple: retrouver les décisions portant sur des demandes du type considéré, puis les analyser pour trouver les raisons potentielles pour lesquelles les juges ont pris telle ou telle autre décision. C'est une approche qu'exercent régulièrement les tribunaux pour résoudre de nouveaux jugements, et les avocats et chercheurs pour connaître la pratique judiciaire et donc l'interprétation de la loi généralement adoptée par les tribunaux.
+
+Notre projet vise, entre autres, l'automatisation de cette analyse empirique des contentieux pour observer de manière exhaustive les pratiques judiciaires. L'objectif final est d'obtenir un logiciel opérationnel capable de fournir une estimation de la probabilité d'obtenir une décision dans un sens déterminé, devant une juridiction déterminée, sur une demande déterminée, et d'identifier les facteurs ou circonstances influençant le résultat.
+Il y a deux phases : une première phase d'indexation d'une masse de décisions, et une phase de comparaison des décisions pour l'identification de facteurs prédictifs.
+Pour la phase d'indexation, elle doit être automatisée, car il est impossible de procéder à l'analyse de chaque décision par des experts humains. Le nombre de décisions est trop élevé (2,5M/an). En conséquence, la machine doit apprendre à reconnaître dans les décisions, les informations qui nous intéressent : prétention (partie, objet, fondement) et résultat de la prétention. De plus, les informations extraites doivent s'insérer dans des catégories qui ont un sens en droit. Il y a donc une étape de constitution d'une ontologie des prétentions (réalisée par des experts juriste ou de manière automatisée si possible). Il y a une étape de constitution des bases d'apprentissage et de test pour l'entraînement à la reconnaissance des prétentions et des résultats.
+Pour la phase de prédiction, on doit regrouper des paquets de décisions homogènes (même résultat sur la même prétention), pour découvrir des facteurs latents corrélés avec un résultat positif ou négatif. 
+
+\end{document}

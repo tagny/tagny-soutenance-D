@@ -1,0 +1,15 @@
+Les décisions jurisprudentielles sont des textes décrivant le contexte, le litige et la solution d'affaires juridiques. 
+
+Elles servent de sources aux juristes pour comprendre comment les juridictions interprètent et appliquent les lois. 
+
+Dans le cadre par exemple de l'étude d'un type de contentieux, la collecte et l'analyse des décisions sont réalisées manuellement par une grande équipe de chercheurs sur plusieurs mois. Elles aident aussi les avocats qui se refèrent aux jugements antérieurs similaires aux problèmes de leurs clients pour estimer les chances que leurs requêtes soient acceptées.
+
+La recherche et l'analyse manuelle des décisions sont difficiles d'une part à cause du grand nombres de jugements rendus, plus de 2 millions et demi par an en France, et d'autre part à cause de l'état non-structuré des textes dont la compréhension requière de résoudre les complexités du langage juridique comme les références ou les énoncés implicites ou agrégées et les ambiguités liées à la langue. 
+
+Ma thèse vise à surpasser ces obstacles pour les décisions françaises. Il s'agit en effet de développer une chaîne d'analyse sémantique devant transformer automatiquement le grand corpus non structuré en base de connaissances. Plus précisément, je propose des approches de traitement automatique du langage naturel pour extraires les informations pertinentes pour les travaux des juristes.
+
+Ces informations sont par exemples les noms des juges, le lieu et la date du prononcé du jugement, ce qui a été demandé et reçu par les parties, et les circonstances factuelles dans lesquelles a eu lieu l'affaire i.e. par exemple est-ce qu'il s'agit d'un cas de divorce, de dispute de voisinage, de licenciement.
+
+Jusqu'à présent nous avons démontré l'application possible de modèles probabilistes graphiques pour détecter les sections, les métadonnées et citations d'articles. Nous travaillons actuellement sur l'extraction des demandes et résultats qui est une tâche beaucoup plus complexe. 
+
+Au final ces informations structurées dans une base de connaissances peuvent être manipulées automatiquement. Elles peuvent servir alors de support au développement de divers outils pratiques pour rechercher des informations, explorer la jurisprudence, conseiller des particuliers et des entreprises, et pourquoi pas étudier la prévisibilité de la justice.
