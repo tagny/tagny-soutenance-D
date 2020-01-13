@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%% file typeinst.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is the LaTeX source for the instructions to authors using
+% the LaTeX document class 'llncs.cls' for contributions to
+% the Lecture Notes in Computer Sciences series.
+% http://www.springer.com/lncs       Springer Heidelberg 2006/05/04
+%
+% It may be used as a template for your own input - copy it
+% to a new file with a new name and use it as the basis
+% for your article.
+%
+% NB: the document class 'llncs' has its own and detailed documentation, see
+% ftp://ftp.springer.de/data/pubftp/pub/tex/latex/llncs/latex2e/llncsdoc.pdf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+%\usepackage{caption}
+%\captionsetup{font=scriptsize}
+\usepackage[caption=false]{subfig}
+
+\usepackage{url}
+%\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
+%\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
+%\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+%\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+%\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+\pagestyle{empty}
+\nocite{}
+\mainmatter  % start of an individual contribution
+
+% first the title is needed
+\title{Extracting information from court decisions
+%\\ \textit{Literature Review and Information Extraction}
+}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{}
+
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{Gildas Tagny Ngompe\inst{1,2}, Sébastien Harispe\inst{1}, Jacky Montmain\inst{1}, Stéphane Mussard\inst{2}, Guillaume Zambrano\inst{2}}%
+%\thanks{Please note that the LNCS Editorial assumes that all authors have used
+%the western naming convention, with given names preceding surnames. This determines
+%the structure of the names in the running heads and the author index.}%
+%\and Ursula Barth\and Ingrid Haas\and Frank Holzwarth\and\\
+%Anna Kramer\and Leonie Kunz\and Christine Rei\ss\and\\
+%Nicole Sator\and Erika Siebert-Cole\and Peter Stra\ss er}
+%
+\authorrunning{
+%Literature Review and Information Extraction
+}
+% (feature abused for this document to repeat the title also on left hand pages)
+
+% the affiliations are given next; don't give your e-mail address
+% unless you accept that it will be published
+\institute{LGI2P, École des mines d'Alès, 69 Rue Georges Besse, Nîmes, France
+\and
+CHROME, Université de Nîmes, Rue du Dr Georges Salan, Nîmes, France\\
+%\mailsa\\
+%\mailsb\\
+%\mailsc\\
+%\url{http://www.springer.com/lncs}
+}
+
+%
+% NB: a more complex sample for affiliations and the mapping to the
+% corresponding authors can be found in the file "llncs.dem"
+% (search for the string "\mainmatter" where a contribution starts).
+% "llncs.dem" accompanies the document class "llncs.cls".
+%
+
+%\toctitle{Analysis of court decisions for forecasting}
+%\tocauthor{Literature Review and Information Extraction}
+\maketitle
+
+
+\begin{abstract}
+We present our recent progress on the analysis of the French judicial corpus; we discuss in particular (i) results of our detailed study of HMM and CRF probabilistic models for detecting sections and entities in court decisions, and (ii) primilary work on the extraction of claim information through key-phase extraction and decision classification. We also discuss faced open challenges like dealing with multiple claims of similar or different types in the same decision, as well as lines of thought for solving these challenges based on discourse analysis.
+
+\keywords{Natural Language Processing, probabilistic models, text classification, court decisions sectioning, entities and claims extraction}
+\end{abstract}
+
+
+\section{Introduction}
+
+A court decision is a document containing the description of a case, i.e. the decision of the judges as well as their motivations. In our aim to provide meaningful insights of court decisions corpora, we are designing automatic information extraction approaches enabling to extract relevant information for characterizing decisions and further analyse them. In particular, we have been working on (1) document sectioning considering three distinct parts (header, body, conclusion), (2) legal named entities detection (city, type of court, judges, parties, date, norm, lawyers, ...), and (3) claims extraction (i.e. for each claim made by parties, we aim at extracting its category, types of involved parties, requested quantum, result meaning, and granted quantum).
+More precisely, we have studied how well Hidden Markov Model (HMM) \cite{rabiner1989tutorial} and Conditional Random Fields (CRF) \cite{lafferty2001crfie} can solve the two first tasks, and how results can be improved by taking into account additional labeled training data, as well as some particular design aspects like feature subset and segment representation selection. Ongoing work also focuses on experimenting a simple approach combining some weighting and classification methods to identify categories of claims and the meaning of the corresponding result; we also study how characteristic terms of a category can be used to locate the amount of money (quantum) requested and finally granted. This paper briefly provides details on our work and suggest some ways of improvement.
+
+\section{Sections and entities detection using HMM and CRF}
+
+HMM and CRF are well-known probabilistic models particularly adapted for extracting information from texts. 
+%for specific domains \cite{Kriz2014nerinczechdecisions} or open ones \cite{mccallum2003crfner} 
+In our work, we have studied their performance in detecting sections and entities in court decisions. 
+%In fact, the approach here consist first in splitting the text into observations or  "\textit{tokens}" that are lines for sectioning and words for entities detection, and then labeling each token with the label associated to the section or entity it belongs to. 
+To understand how HMM and CRF work, let's consider a text $ T $ as a sequence of observations or "\textit{tokens}" $ t_{1:n} $. Each $ t_i $ is a segment of text - in our case a word for entities and a line for sections. Considering a collection of labels $L$, labeling $ T $ consists of assigning the appropriate labels to each $ t_i $. Our detection tasks are both segmentation tasks of text contents $ T$, i.e. the aim is to split $ T $ into partitions such that the elements of a partition necessarily form a subsequence of $T$.  While HMM  assigns a joined probability $ P (T , L) = \prod\limits_i P(l_i \vert l_{i-1})P(T \vert l_i)$ to couples of sequences of observations $ T = t_{1: n} $ and labels $ L = l_{1:n} $, the CRF rather assigns a conditional probability $P(L|T) = \frac{1}{Z}\exp \left(\sum\limits_{i=1}^n\sum\limits_{j=1}^F \lambda_j  f_j(l_{i-1},l_i,t_{1:n},i)\right)$ to them; where $Z$ is the normalization factor and $f(\cdot)$ are the features functions that handle observation representations in CRF. However, after been trained on labeled text examples, both models are applied on an unlabeled text by using the Viterbi algorithm 
+%\cite{viterbi1967viterbi} 
+ - this algorithm simply infers the label sequence having the highest probability. 
+%The Viterbi algorithm uses parameters of both models that are trained on labeled examples. 
+To help those models to get better results, some candidate descriptors of tokens have been designed. Our results related to the definition of some features, showing how they improve HMM and CRF performances are summarized in \cite{tagny2017sectNerhmmcrf}.
+
+A lot of features have been defined; that are either based on the writing style of court decisions (e.g. line length, line words, neighbors words, word properties), or extended properties of tokens (e.g. part-of-speech tags, word topic). %The problem here is that HMM can handle only one feature and CRF even if it can exploit multiple features, all the features might not be useful and combined together, it is not sure that they will give the best results. So it is important the use the best feature subset that we define as the smallest subset of the candidate that give best results.
+To optimize the feature sets, two feature selection algorithms have been tested for CRF: the bidirectional search (BDS) %\cite{liu2012featureSelection} 
+ and Sequential Floating Forward Selection (SFFS).%\cite{pudil1994floatingFeatSelection}. 
+Those algorithms add or remove features over iterations as the results improve or not. Our actual experiments show that those algorithms are able to reduce significantly the quantity of features but only slightly improve the results. Their disadvantage is the duration of the selection phase - up to ten hours.
+We also studied four different segment representations (IO, BIO, IEO, and BIEO) that are different ways of tagging tokens \cite{konkol2015tagModel}. %The IO model that we used to select the features does not emphasize any part of the entity and assigns the same label to all the tokens of an entity. Other models are more complex and distinguish either the first token of the entity (BIO) or the last one (IEO), or both (BIEO). 
+BIO, IEO, and BIEO  help to detect successive entities, as the beginning or the end of each entity is differently labeled. We also observed that those three representations actually improve results at the cost of a training time increase. Beside the segment representation and feature selections, labeling more data also obviously improve result within a limit. This suggests to correctly select the examples in order to cover the different variants of text structure. 
+
+\section{A simple approach for claims extraction}
+
+During a case, each party expresses claims willing to be granted by the judges. Court decisions summarize, beside facts, claims and arguments of the parties, as well as answers and reasons of judges. There are a lot of diverse styles to express claims and results: explicitly (in a dedicated paragraph precising the party to condemn, the corresponding fault, and eventually how much we claim), implicitly (need interpretation of texts), through reference to previous decisions (in appeal  decisions, judges partially or totally  confirm or reverse previous judgments). Hence the expression of claims is not standard and moreover, categories of claims are not all yet known. This makes claim extraction a difficult task. That is why our first approach is fully supervised and iterative, i.e. by trying to solve the problem considering the specificity of each category. 
+
+Firstly, a set of characteristic terms (n-grams) of a category is extracted by computing a score evaluating the likelihood for terms to occur in texts of that category.  Several supervised global weighting methods have been tested: relative frequency \cite{lan2009rfweight}, correlation coefficient \cite{ng1997ngl}, %the GSS coefficient  \cite{galavotti2000gss} 
+... All these methods measure how much a term is relevant for a category by using labeled examples, i.e. \textit{positive} texts (within the category) and \textit{negative} ones (outside the category). 
+%So we just have to sort the terms in a descending order and chose those at the top of the list. 
+Since, it may be hard to build a large set of labeled negative samples, we used a very large set of unlabeled data by assuming that the considered category only covers a small proportion of this large set. In practice, this postulate is true for the majority of the categories but fails for some categories covering a large subset of decisions (e.g. \textit{article 700 du code de procédure civile}).  
+
+
+Secondly, to determine whether the decision refers to a category, we represent texts as vectors and then train a classifier on labeled examples. The dimensions of the vector are the terms learned from training sets that are the most relevant to the category; with the weight of a term $w*$ for a text $t$ defined as: \[ weight(w*, t) = weight_{local}(w*, t) * weight_{global}(w*) * factor_{normalization}\]
+
+\noindent The local weight is generally a term frequency $TF$-based method like term presence $TP$, or the logarithm of the term frequency.  
+In our experiment, we have tried different configurations with different sizes of n-grams ($1 \leq n \leq 5$) fixed or not, global and local weighting methods, vector sizes, classifiers (SVM, Naive Bayesian, ...). Classifications on different categories have been tested (e.g. \textit{dommages-intérêts pour procédure abusive, trouble de voisinage, article 700, prestation compensatoire}). Tests show that this classification task is actually straightforward since some configurations reach a 100 \% accuracy even by using the simple Inverse Document Frequency (IDF) schema on all words. Indeed, very few terms can lead to very accurate classification since the vocabulary associated to the categories is very specific, short and common in justice.
+
+However, our expectation was that the optimal subset of terms (for classification) would help locate the amount of money claimed and eventually granted - by evaluating distances between those terms and the mentioned quanta. Note however that the quantum can be mentioned before or after the terms - and sometimes the closest quantum to the terms is not the targeted one; in addition a quantum can also refer to a past decision or a claim. To tackle the problem of quantum/claim linking we assumed that it might help to zone the different contexts to further match claims and results using parties' names mentioned in that zone. In the setting considered so far, the problem has been simplified by assuming that a decision contains at most one claim of a given category. By training a classifier on all the decisions, we expect to distinguish decisions with granted claims and decisions with rejected claims for a particular category of claim. Results on the datasets analyzed show the modest but interesting performance of the approach: maximal F1-measures at 75.52 for \textit{article 700}, and at 86.66 for \textit{trouble de voisinage}). To improve those results, instead of reducing features by selection, we are currently evaluating techniques of reduction by projection - in the style of the principal component analysis.
+
+\section{Conclusion}
+
+We have summarized our result on the study of sectioning and detection of legal named entities using probabilistic graphical models (HMM \& CRF) - showing the interesting performance of those models in our application context. We are currently working on one of the more difficult tasks of the project: claims extraction. In particular, we are experimenting a simple method with which promising results have been obtained so far. %Detecting claims before categorizing them also seems of interest.
+% We could benefit by studying diverse aspects like detecting all the claims of a category, unsupervised categorization of claims, .... 
+As a schedule for the rest of the project, we also propose to study four additional tasks: (1) claims text segments detection using semantic and discourse analysis to deal with dependencies between statements; (2) comparing unsupervised and supervised claims categorization; (3) formalize as much as possible the information extracted so far in a knowledge base by applying disambiguation and resolution methods on extracted information; (4) analyze which factors and situations (contexts) are correlated with judges decision making - paving the way to predictive analysis. %This last task will involve the design of predictive analytic tools that will determine some factors that might be correlated with court's opinions on different subjects. 
+% The claim extraction task aims to extract specific information about claims of each party. In fact, during a trial each party expresses some claims he is convinced to have the right on, associated with his arguments. Based on the different given arguments, judges reason and then return their answer for each of the claims. Decisions contains claims, answers and  arguments of parties and judges. Our concern is to extract from texts the following information for each expressed claim:
+%\begin{itemize}
+%\item the category of the claim combining a concept of what is requested and the legal basis of the claim (e.g. a legal rule)
+%\item the party who's asking and the party against who the claim is directed
+%\item the amount of money requested if any (called \textit{the claimed quantum})
+%\item the meaning of the answer of judges (e.g. a category between {GRANTED, REJECTED})
+%\item the amount of money granted if any (called \textit{the granted quantum})
+%\end{itemize}
+%Of course all these information occur in different zones in the document. We can identify four types of zones in decisions:
+%\begin{enumerate}
+%\item the conclusions of a party: it's a zone where claims of a party a summarized in a paragraph or in a bullet-list. Other parties and the correspondent \textit{quanta} are indicated. In the case of an appeal trial, a claim can be expressed by referring to previous decisions.
+%\item judges' reasons: that are reason that justify the decision of judges. The are detailed for each claim. They conclude with the answers and might also recall claims of parties.
+%\item The conclusion of judges: that's also the conclusion of the decision. Decisions of judges are summarized there and they might refer to previous judgments in the case of an appeal decision. 
+%It's important to notice the presence of some key verbs that are interpreted to get the meaning of some statements (e.g. \textit{debouter} = rejected claim, \textit{condamner} = granted claim).
+%\item in the case of an appeal decision, the previous judgment of the case are recall. That helps to understand some statements that reference  them.  They are expressed quite similarly as the current decision.
+%\end{enumerate}
+%
+%We only define concepts of passages here, but practically, all those statements are not as structured as we describe them. They can be mixed with implicit transitions. Sometimes, no parties conclusion is given and we have to deduce them by understanding all the text (at least other zones). The statement are expressed in natural language without any effort of structure and with reference to previous judgments. To summarize, decisions are unstructured texts and that makes it very difficult to extract claims from them. 
+%
+%\section{A simple approach to extract claims and results}
+%We simplify the problem by considering that there is at most one claim of a given category in any decision. This avoid us to deal with complex cases by verifying that all the claims are extracted. 
+%
+%Then, our current approach is supervised and iterative; meaning that since all the categories are not already known, we decided to define a generic approach adaptable according to the specificity of the category. 
+%
+%First of all, given a category of claim, the system will determine particular clues used to express a category. This clues will be used to detect what kinds of category are in a decision, to used the suitable result interpreter, and also to locate quanta. 
+%\subsection{Extracting clues of text categories}
+%Here as clues, we understand terms (phrases). Thus we tray to detect what terms are used particularly to express or state a particular category of claims.
+%
+%We define 2 classes of decisions: "\textit{contains a claim of the category}" and "\textit{doesn't contain any claim of the category}. 
+%Given a term, we asses how often it occurs with the considered category compared to how often it occurs in all the corpus or without the category. 
+%\subsection{Determining whether a decision contains a claim of the corresponding category}
+%
+%\subsection{Determining the meaning of the result through classification}
+%
+%\subsection{Locating quanta using proximity}
+%
+%
+%\section{Why do we need a discourse analysis?}
+%
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+%\section*{Appendix: Springer-Author Discount}
+
+
+\end{document}

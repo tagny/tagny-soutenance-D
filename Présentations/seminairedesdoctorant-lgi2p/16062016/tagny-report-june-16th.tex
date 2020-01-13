@@ -1,0 +1,215 @@
+
+%%%%%%%%%%%%%%%%%%%%%%% file typeinst.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is the LaTeX source for the instructions to authors using
+% the LaTeX document class 'llncs.cls' for contributions to
+% the Lecture Notes in Computer Sciences series.
+% http://www.springer.com/lncs       Springer Heidelberg 2006/05/04
+%
+% It may be used as a template for your own input - copy it
+% to a new file with a new name and use it as the basis
+% for your article.
+%
+% NB: the document class 'llncs' has its own and detailed documentation, see
+% ftp://ftp.springer.de/data/pubftp/pub/tex/latex/llncs/latex2e/llncsdoc.pdf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+%\usepackage{caption}
+%\captionsetup{font=scriptsize}
+\usepackage[caption=false]{subfig}
+
+\usepackage{url}
+%\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
+%\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
+%\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+%\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+%\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+\pagestyle{empty}
+\nocite{}
+\mainmatter  % start of an individual contribution
+
+% first the title is needed
+\title{A Semantic Analysis of a Comprehensive Corpus of Court Decisions for the Development of a Predictive Model of the Judicial Risk 
+%\\ \textit{Literature Review and Information Extraction}
+}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{Semantic Analysis of court decisions}
+
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{Gildas Tagny Ngompe\inst{1,2}, Sébastien Harispe\inst{1}, Jacky Montmain\inst{1}, Stéphane Mussard\inst{2}, Guillaume Zambrano\inst{2}}%
+%\thanks{Please note that the LNCS Editorial assumes that all authors have used
+%the western naming convention, with given names preceding surnames. This determines
+%the structure of the names in the running heads and the author index.}%
+%\and Ursula Barth\and Ingrid Haas\and Frank Holzwarth\and\\
+%Anna Kramer\and Leonie Kunz\and Christine Rei\ss\and\\
+%Nicole Sator\and Erika Siebert-Cole\and Peter Stra\ss er}
+%
+\authorrunning{
+%Literature Review and Information Extraction
+}
+% (feature abused for this document to repeat the title also on left hand pages)
+
+% the affiliations are given next; don't give your e-mail address
+% unless you accept that it will be published
+\institute{École des mines d'Alès, LGI2P,
+69 Rue Georges Besse, Nîmes, France
+\and
+Université de Nîmes, CHROME, Rue du Dr Georges Salan, Nîmes, France\\
+%\mailsa\\
+%\mailsb\\
+%\mailsc\\
+%\url{http://www.springer.com/lncs}
+}
+
+%
+% NB: a more complex sample for affiliations and the mapping to the
+% corresponding authors can be found in the file "llncs.dem"
+% (search for the string "\mainmatter" where a contribution starts).
+% "llncs.dem" accompanies the document class "llncs.cls".
+%
+
+%\toctitle{Analysis of court decisions for forecasting}
+%\tocauthor{Literature Review and Information Extraction}
+\maketitle
+
+
+\begin{abstract}
+How can we observe and understand how judges usually make their decisions knowing that their subjective interpretation of legal rules make the application of the law uncertain? We are currently developing an approach to study comprehensively the jurisprudence by solving the challenge of the retrieval and analysis of the always growing big number of court decisions in France. This project addresses the tasks of extracting information from decisions in the aim of building a legal knowledge base (KB). It progresses to study how such a KB could be used for studying the judicial risk by being the cornerstone of descriptive statistical and predictive analyses. Our early extraction results show that CRF-based models work well for the segmentation of texts and the extraction of named entities. 
+
+\keywords{Court decisions analysis, information extraction}
+\end{abstract}
+
+
+\section{Introduction}
+
+The subject aims the extraction of law cases information from the textual contents of court decisions and their normalization to build a knowledge base of the jurisprudence. This knowledge base will enable the computer to structure and classify court decisions with regard to several specifications such as the applied rules and the obtained results. There are various application frameworks like better understanding how legal rules are applied, predicting court outcomes, search similar decisions ... 
+
+First, we focus on designing a system to extract information from past decisions. Then, we will build an analysis  system based on some frequencies of results of judges given the demand and the norms applied in a selected  set of decisions. These frequencies will give us access to foresee the probabilities that some judges make a certain decision in a given situation.
+
+The expected results will not only help lawyers, but also individuals and businesses. The huge volume of decisions (over 4 million in France per year) make impossible an exhaustive manual analysis. Moreover, the justice is too complex and its language hardly understandable to allow non-lawyers to know the legal consequences of their actions without the help of an expert.
+%\footnote{According to a survey of the Ministry of Justice conducted in 2013, 88\% of French believe that the justice is too complex and 80\% believe that its language its too complex\cite{cretin2014justicecomplexe}} 
+
+\section{Analysis Approaches of Court Decisions}
+
+Ambiguities in the conditions of applying legal rules are left to the unique appreciation of judges in real cases. To study judges decisions, common automatic approaches are mostly predictive. The complexity in the application of the law with other reasons led to the fail of legal expert systems \cite{leith2010risefall}. The only knowledge of legal rules is not enough to give advice. That is why recent approches have been developed based on the analysis of past court decisions. Reasoning by analogy seems logical because we expect from a fair justice to give simlar result for similar cases. Some of these approches described a case with some metadata about the court, the judges(e.g. political party), or the case (e.g. the issue area of the case). Hence, statistical methods based on binary classification trees were designed to predict the votes of the judges of the U.S. Supreme Court. After poor performance with a tree per judge (66.7\% for the tree with 67.9\% for human experts \cite{martin2004competing}), an extremely randomized trees based approach \cite{katz2014predicting} offers a better but still low accuracy (70.9\%). The system "SMILE + IBP" \cite{Ashley2009}, in contrary, relies on predefined "Factors" that model the facts to classify the cases. Hence, by combining rule-based and case-based reasoning, "SMILE + IBP" determines the favored party in a given case. This system presented a good accuracy (91.8\%) but was restricted only to trade secret misappropriation cases. Moreover, the experiments were done on few cases (184 cases from the CATO's database).
+
+Comparing our project to those works, we propose another approach to analyze semantically and statistically a huge set of court decisions. We can imagine many applications of these statistics. For instance, it will be easier and faster to get a clear and comprehensive insight on the application of the law over the time and in different locations. Moreover, a predictive analysis might be designed upon these statistics to forecast future decisions with other factors not available in the contents of decision (e.g. major events, their political ideology, their experience, change in the legal standards). 
+
+\section{Information Extraction challenges and early results}
+
+Even if obtaining court decisions is not an easy task, we have gathered more than 600k decisions of various courts. Building the legal knowledge base requires a description of these decisions. The relevant information can be founded by analyzing the unstructured text of decisions. The forms of these information define various tasks of text analysis. Some elements(location, date, parties, judges) are directly recognizable in the text and their extraction is similar to the named entities recognition(NER). But to discover the demands, we suggest an unsupervised clustering of decisions. After identifying the demands in a decision, the computer must be able to identify and interpret the  conclusion of judges to know if the demand was rejected or accepted.
+
+Beginning by the NER task, we noticed that the entities are distributed between three main sections on which we chose to organize the extraction separately: header (case references), the middle text (norms invoked and demands quantum), and the conclusion (norms applied, results quantum). It seemed logical at first that a rule-based system could easily detect these sections. We have implemented such a system that has shown its limits by suggesting multiple schema of segmentation for a document and a lot of wrong schema due to the detection of pattern occurrences at wrong location. 
+
+\par Many works demonstrated the effectiveness of probabilistic graphical model in some sequence tagging tasks like the segmentation of FAQs as questions and answers\cite{mccallum2000maxent} or like for NER in the header of scientific papers (HMM and CRF\cite{peng-mccallum2004crf}). Thus, we designed two approaches based on probabilistic models: Hidden Markov Model(HMM) and Conditional Random Fields (CRF). The two approaches determine the section of each line of a document. For the CRF-based model, we manually labeled and defined some features (line number, length ...) of the lines in a set of 543 decisions from the Court of Appeal of Nîmes. The excellent performance (table \ref{zoningperf}) of CRF-based model demonstrates its effectiveness for decision segmentation.
+\begin{table}[!ht]
+    \subfloat[HMM\label{zoningperf:hmm}]{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{TAG (meaning)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 score} \\
+\hline
+E (header) &  0.9625 & 0.9433 & 0.9528 \\
+\hline
+T (middle text) &  0.7679 & 0.703 &  0.734 \\
+\hline
+D (conclusions) & 0.3272 &  0.4486 & 0.3784 \\
+\hline
+\multicolumn{4}{|r|}{F1 Average = 0.6884} \\
+\hline
+\end{tabular}
+    }
+    \hfill
+    \subfloat[CRF\label{zoningperf:CRf}]{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{TAG} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 score} \\
+\hline
+E & 1 & 1 & 1 \\
+\hline
+T & 1 & 1 & 1 \\
+\hline
+D & 1 & 1 & 1 \\
+\hline
+\multicolumn{4}{|r|}{F1 Average = 1}  \\
+\hline
+\end{tabular}
+    }
+    \caption{Evaluation of HMM-based and CRF-based segmentation on 109 decisions}
+    \label{zoningperf}
+  \end{table}
+  
+Then, we implemented and compared two NER approaches based respectively on HMM and CRF. The objective of the systems is to tag each token (word or punctuation) in the headers with the label of the entity the token belongs to. After labeling  manually the entities in 543 headers from the precedent dataset, we defined some tokens features for the CRF (e.g. position in line, number of characters). With the two models trained with 80\% of the data, we observed that CRF-based system outperforms the HMM-based system on the 109 remaining headers (table \ref{nerperf}). However, the CRF-based system detects quite accurately some entities (e.g. city, jurisdiction) but remains ineffective on the name of parties (plaintiffs and respondents). Some more discriminating features are needed to improve the performance of the CRF-based system.
+
+\begin{table}
+    \subfloat[HMM\label{nerperf:hmm}]{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+ \textbf{TAG (meaning)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 score} \\ \hline
+O (Not An Entity) & 0.9717 & 0.9352 & 0.9531 \\ \hline
+RG (\textit{numéro})& - & 0 & - \\ \hline
+JR (\textit{juridiction}) & 0.6149 & 0.8349 & 0.7082 \\ \hline
+VL (\textit{ville})& 0.876 & 0.9725 & 0.9217 \\ \hline
+FM (\textit{formation})& 0.8428 & 0.9872 & 0.9093 \\ \hline
+DT (\textit{date})& 0.9729 & 0.9818 & 0.9773 \\ \hline
+APL (\textit{appelant})& 0.2551 & 0.1725 & 0.2058 \\ \hline
+AV (\textit{avocat})& 0.8493 & 0.9573 & 0.9 \\ \hline
+ITM (\textit{intimé})& 0.1974 & 0.4162 & 0.2678 \\ \hline
+ITV (\textit{intervenant})& - & 0 & - \\ \hline
+JG (\textit{juge})& 0.5732 & 0.9719 & 0.7212 \\ \hline
+RL (\textit{rôle})& 0.9048 & 0.0435 & 0.083 \\ \hline
+\multicolumn{4}{|r|}{F1 Average = 0.5539} \\ \hline
+\end{tabular}
+    }
+    \hfill
+    \subfloat[CRF\label{nerperf:CRf}]{%
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{TAG} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 score}\\ \hline
+O & 0.9932 & 0.9946 & 0.9939  \\ \hline
+RG & 1 & 0.9908 & 0.9954 \\ \hline
+JR & 1 & 0.9908 & 0.9954 \\ \hline
+VL & 1 & 0.9908 & 0.9954 \\ \hline
+FM & 1 & 1 & 1  \\ \hline
+DT & 1 & 0.9848 & 0.9923  \\ \hline
+APL & 0.8491 & 0.7392 & 0.7904 \\ \hline
+AV & 0.9681 & 0.954 & 0.961 \\ \hline
+ITM & 0.7982 & 0.864 & 0.8298 \\ \hline
+ITV & - & 0 & - \\ \hline
+JG & 0.9445 & 0.9414 & 0.943 \\ \hline
+RL & 0.8758 & 0.8879 & 0.8818 \\ \hline
+\multicolumn{4}{|r|}{F1 Average = 0.8649} \\ \hline
+\end{tabular}
+    }
+    \caption{Evaluation of HMM-based and CRF-based NER on 109 headers}
+    \label{nerperf}
+  \end{table}
+
+\section{Conclusion}
+
+During our work, we gathered more than 600 thousands decisions from various courts. We labeled a training dataset of 543 documents for segmentation and NER in the headers. The labeling took a lot of time since we did it manually. Moreover, some features were defined and computed for the CRF-based systems. However, we obtained some excellent results on our testing dataset even if some entities remain hardly recognizable.
+
+Future works will focus first on the recognition of the others entities with a priority on norms. Next, we intend to use the norms to discover automatically the demands available in our corpus because similar demands are generally based on similar norms. So we want to cluster the decisions in such a way that each cluster represent a demand. The clusters should overlap since a decision can contain multiple demands.
+ 
+\bibliographystyle{unsrt}
+\bibliography{../../Reports/references}
+
+%\section*{Appendix: Springer-Author Discount}
+
+
+\end{document}
