@@ -1,0 +1,54 @@
+Prochaine pré-soutenance
+	Mardi 21	
+	12h30 -14h
+	clavière
+	
+	Jeudi 23
+	12h - 14h
+	répète seul dans l'amphi
+	
+	Informer Stéphane
+
+Jacky	
+1. Le plan est trop générique. Il doit être plus évocateur. Ajouter plus de contenu informationnel
+2. Doctorat en informatique ???
+3. titre en minuscule
+* retirer la section Questions
+Enlever les transparents noirs
+4. slide1 : titre (il faut un titre 
+5. slide 3 : 
+6. la motivation : uniquement la volumétrie
+7. la nonstructuration est une difficulté pour moi (rapprocher ce slide de celui)
+* slide 5: remplacer le tableau par un histogramme
+* mettre les sources en tiny
+* on dit des "gros volumes"
+* utiliser le temps d'analyse manuelle des décisions
+* slides 6 : moteur de recherche juridique à mots-clés.
+* enlever les cartoons
+* être plus solennel, plus formel, prioriser des slides plus riches, ne pas se positionner en simple utilisateur
+* slide 7 : compréhension exhaustive ???
+* slide 7 : Annotations ??? quelle différence ?
+* slide 8 : remplacer les balises xml (ça fait geek) par des surlignés colorés (bulles) avec des légendes
+* titre des problèmes : remplacer problème par les tasks (eg extraction d'information)
+* slide 9 : agrégation = décision groupée sur plusieurs demandes 
+* ratacher les descriptions des tâches aux problèmes du slides 7 (peut -être un logo de tâche) i.e. mentionner les praoclématiques 
+* négligent??
+* slide 10 : enlever il s'agit
+* découverte des circonstances factuelles > pourquoi on ne s'arrête qu'au regroupement > quand est-ce qu'on arrive aux circonstances factuelles
+* slides objectif > slides de détaille des problèmes abordés > slides de positionnements des tâches en text mining (rouge)
+* section biblio sur les décisions après les motivation :> dans le but de montrer comment le NLP aborde différents problèmes même ceux qui ne sont pas traités  (peut-être un slide)
+*  slide 16 : détailler les différentes analyses qui ont été réalisées (sélection des caractéristiques, ...)
+* slide 16 : enlever le lambda sur le HMM, enlever l'étoile 
+* slide 16 : justifier 
+* Titre de contributions:
+  * slide Etude du HMM et du CRF pour l'annotation
+* Faire de bonne transition entre contribution (plan avec partie grise, ou reprendre le schéma des objectifs)
+* éviter de changer de nom d'objectif (utiliser une terminologie uniformisé)
+* conclusion bilan : soit des items, soit reprendre le schéma de l'objectif (plus graphique pour lire le bilan)
+* conclusion perspective: créchendo des petites extrapolation à de nouvelles problématiques de recherche
+* micro ou pas?
+
+
+* rapport :
+ - les inquiétudes posées : regarder les "aurait pu", les conditionnels???
+ - comment les approches proposées répondent aux inquiétudes des rapporteurs 
