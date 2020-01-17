@@ -1,0 +1,52 @@
+\begin{frame}[c]{Appliquer le HMM ou le CRF pour l'annotation}
+	\only<1>{1. Méthodes : 	Modèles probabilistes à états et observations
+
+\scriptsize
+\begin{table}[]%width=\linewidth
+	%\begin{tabular}[]{p{0.40\linewidth}|p{0.55\linewidth}}
+	\begin{tabular}[]{c|c}
+		\toprule
+{\textbf{HMM}} & {\textbf{CRF}} \\
+%		\midrule
+%		\textbf{Generative} models 	& \multicolumn{2}{c}{"\textbf{Discriminative}" or "\textbf{Conditional}" models } \\[0.25em]
+%\midrule		
+%"\textbf{generate}" input	& {"\textbf{condition}" on input }\\%[0.25em]
+\midrule
+{un seul descripteur  par observation}	& {plusieurs descripteurs complexes par observation}\\%[0.25em]
+\midrule	
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.3cm,
+                    semithick]
+  \node[state] (S1)                    {$s_{t-1}$};
+  \node[state]         (S2) [right of=S1] 	  {$s_{t}$};
+  \node[state]         (O) [below of=S2] {$o_{t}$};
+  \path (S1) edge              node {} (S2)
+        (S2) edge              node {} (O);
+\end{tikzpicture}
+				& 
+
+\begin{tikzpicture}[auto,>=stealth',shorten >=1pt,auto,node distance=1.3cm,
+                    semithick]
+  \node[state] (S1)                    {$s_{t-1}$};
+  \node[state]         (S2) [right of=S1] 	  {$s_{t}$};
+  \node[state]         (O) [below of=S2] {$o_{t}$};
+  \path (S1) edge              node {} (S2)
+        (S2) edge              node {} (O);
+\end{tikzpicture}					
+					\\%[0.25em]
+\midrule
+$P_\lambda(S|O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) * P(o_t \vert s_{t})$  & $P_\lambda(S|O) = \frac{1}{Z(O)}exp\left( \sum\limits_{t=1}^{T}\sum\limits_{k} \lambda_k f_k(s_{t-1},s_t, o_t) \right) $ \\
+% & & & \\
+\tiny \cite{Seymore1999hmm} & \tiny \cite{peng2006crf} \\ 
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\footnotesize
+
+Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du texte
+
+\textbf{Entrainement fait sur des séquences préalablement étiquetées}
+}
+	\only<2>{2. Données}
+	\only<3>{3. Résultats}	
+\end{frame}

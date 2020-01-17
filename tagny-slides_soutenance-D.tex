@@ -25,8 +25,11 @@
 \usetikzlibrary{arrows,automata}
 \usepackage{array,multirow}
 \usepackage{nameref}
+\usepackage{listings}
+\usepackage{eurosym}
 \usepackage{xcolor}
 \definecolor{shadecolor}{RGB}{51,51,51}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 
 \makeatletter
 \newcommand*{\currentname}{\@currentlabelname}
@@ -62,6 +65,40 @@
 \renewcommand{\tablename}{\scriptsize {\scshape Table}}
 }
 
+\lstset{
+	basicstyle=\tiny,
+	breaklines=true,
+	showstringspaces=false,
+	inputencoding=utf8,
+	extendedchars=false,
+	literate=% {à}{{\`a}}1 {â}{{\^a}}1 {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {ù}{{\`u}}1 {û}{{\^u}}1 { ̧c}{{\c{}c}}1
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1    
+	{À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+	{ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+	{Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	{â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+	{Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+	{Ã}{{\~A}}1 {ã}{{\~a}}1 {Õ}{{\~O}}1 {õ}{{\~o}}1
+	{œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+	{ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+	{ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+	{€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+	{»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {°}{{$^\circ$}}1 
+}
+
+\lstdefinelanguage{XML}
+{
+	morestring=[b]",
+	morestring=[s]{>}{<},
+	morecomment=[s]{<?}{?>},
+	numbers=none,
+	stringstyle=\color{black},
+	identifierstyle=\color{darkblue},
+	keywordstyle=\color{cyan},
+	morekeywords={xmlns,version,type}% list your attributes here
+}
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %        BEAMER OPTIONS
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -120,202 +157,22 @@ pdfcreator = {}
 \tableofcontents[hideallsubsections]
 \end{frame}
 
-\section{Introduction}
+\include{contents/intro}
 
-\begin{frame}[c]{Les juristes analysent les décisions}
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{lawyerwork.png}
-	\end{center}
-	
-	\begin{block}{Pourquoi?}
-		\begin{itemize}
-			\item comprendre et comparer l'application loi (contentieux, ville, ...)
-			\item estimer le risque judiciaire
-			\item ... %anticiper les affaires futures
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-\begin{frame}{Motivation: documents non-structurés, langage complexe}
-	\scriptsize
-	\begin{columns}
-		\begin{column}{.50\linewidth}
-			ARRÊT N°
-			
-			R.G: 11/03924
-			
-			...
-			
-			{COUR D'APPEL} DE {NÎMES}
-			
-			{CHAMBRE CIVILE}
-			
-			{1ère Chambre A}
-			
-			ARRÊT DU {20 MARS 2012}
-			
-			APPELANTE:
-			
-			{Madame Michéle A.} ...
-			
-			assistée de la {SELARL VAJOU}, ...
-			
-			INTIMES:
-			
-			{Monsieur Martial B} ...
-			
-			assisté de la {SCP MARION GUIZARD PATRICIA SERVAIS}, ...
-			
-			COMPOSITION DE LA COUR LORS DU DÉLIBÉRÉ:
-			
-			{M. Dominique BRUZY, Président}
-			
-			{M. Serge BERTHET, Conseiller}
-			
-			...
-		\end{column}
-		\begin{column}{.50\linewidth}
-			FAITS, PROCEDURE, ...
-			
-			Madame Michèle A. demande:
-			
-			...
-			
-			- de condamner Madame JONES-B. à lui payer la somme de {2.500 euros} au titre de l'{article 700 du Code de Procédure Civile}, 
-			
-			\vspace{0.4cm}
-			
-			PAR CES MOTIFS, LA COUR:
-			
-			...
-			
-			Vu l'{article 809 du Code de Procédure Civile},
-			
-			...
-			
-			{Déboute Madame A. de sa demande de provision sur dommages-intérêts.}
-			
-			...
-			
-			Vu l'{article 700 du Code de Procédure Civile},
-			
-			Condamne Madame JONES-B. à verser à Madame A. la somme de {2.500 euros}.
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[c]{Motivation: grand volume de décisions}
-	\textbf{Plus de 4 millions de décisions prononcées / an}
-	\begin{table}[!htb]
-		\scriptsize
-		\begin{center}
-			\begin{tabular}{|l|l|l|l|l|l|}
-				\hline
-				\textbf{Justice}	& \textbf{2013}  & \textbf{2014}  & \textbf{2015}  & \textbf{2016}  & \textbf{2017}  \\ \hline
-				civile   & 2 761 554 & 2 618 374 & 2 674 878 & 2 630 085 & 2 609 394 \\ \hline
-				pénale   & 1 303 469 & 1 203 339 & 1 206 477 & 1 200 575 & 1 180 949 \\ \hline
-				administrative & 221 882 & 230 477 & 228 876 & 231 909 & 242 882 \\ \hline
-			\end{tabular}
-			
-			\textit{\scriptsize{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}  
-		\end{center}
-		\caption{Nombre de décisions prononcées en France par an de 2013 à 2017.}\label{tab:intro:nbdecisionstats}
-	\end{table}
-\end{frame}
-
-\begin{frame}[t]{Motivation: recherches et analyses sémantiques difficiles}
-	
-	Moteurs de recherche juridique à mots-clés 
-	
-	Aucune analyse synthétique des décisions 
-	
-	%\begin{figure}
-	\fbox{\includegraphics[width=0.9\paperwidth]{jurica.png}}
-	
-	\textit{\tiny{Source: \url{LexisNexis.com}}} 
-	%\caption{Formulaire de recherche}
-	%\end{figure}
-\end{frame}
-
-\begin{frame}[c]{Objectif : automatiser des tâches d'analyse de décisions}
-	\only<1>{\begin{figure}[!htb]
-		% pipeline-cassandra.pdf
-		\includegraphics[width=\textwidth]{Objectif_these.pdf}
-		\caption{Objectifs et exemples d'application de la thèse.} \label{fig:intro:objectif-these}
-	\end{figure}}
-
-	\only<2>{\begin{figure}[!htb]
-		\includegraphics[width=\textwidth]{Objectif_these-problemes2.pdf}
-		\caption{Objectifs et problèmes correspondants en analyse de données textuelles.} \label{fig:intro:objectif-these-problemes}
-	\end{figure}}
-\end{frame}
-
-\begin{frame}[c]{Problème : annotation de sections, métadonnées, normes}
-	\[idf(t) = \log_2\left(\frac{N}{N_t}\right)\]
-\end{frame}
-
-\begin{frame}[c]{Problème : extraction des demandes}
-	
-\end{frame}
-
-\begin{frame}[c]{Problème : découverte des circonstances factuelles}
-	
-\end{frame}
-
-\section{Analyse automatique des corpus judiciaires}
-
-\begin{frame}[c]{Annotation et extraction d'information}
-	
-\end{frame}
-
-\begin{frame}[c]{Classification de documents}
-	
-\end{frame}
-
-\begin{frame}[c]{Similarité entre texte}
-	
-\end{frame}
-
+\include{contents/litterature}
 
 \section{Contributions}
-\begin{frame}[c]{Appliquer le HMM et le CRF pour l'annotation}
-	\only<1>{1. Méthodes}
-	\only<2>{2. Résultats}	
-\end{frame}
+\include{contents/contrib-structuration}
+\include{contents/contrib-demandes}
+\include{contents/contrib-sensresultat}
+\include{contents/contrib-similarite}
 
-
-\begin{frame}[c]{Retrouver les demandes à l'aide des termes clés}
-	\only<1>{1. Méthodes}
-	\only<2>{2. Résultats}		
-\end{frame}
-
-\begin{frame}[c]{Extendre le Gini-PLS pour la classification de textes}
-	\only<1>{1. Méthodes}
-	\only<2>{2. Résultats}		
-\end{frame}
-
-\begin{frame}[c]{Apprendre la similarité par transformation de document}
-	\only<1>{1. Méthodes}
-	\only<2>{2. Résultats}		
-\end{frame}
-
-\section{Conclusions}
-\begin{frame}[c]{Conclusions : bilan}
-
-\end{frame}
-
-\begin{frame}[c]{Conclusions : perspectives}
-	
-\end{frame}
-
-\section{Questions}
-
+\include{contents/conclusions}
 
 %\usebackgroundtemplate{\includegraphics[height=\paperheight]{tribunal.png}}
 %\section{\noindent\colorbox{shadecolor}
 %	{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\textcolor{white}{Questions}}}}
 %\usebackgroundtemplate{}
-
 
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %	References:
