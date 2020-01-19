@@ -16,23 +16,13 @@
 	\end{block}
 \end{frame}
 
-\begin{frame}[c]{Motivation: grand volume de décisions}
+\begin{frame}[c]{Motivation: gros volume de décisions}
 	\textbf{Plus de 4 millions de décisions prononcées / an}
-	\begin{table}[!htb]
-		\scriptsize
-		\begin{center}
-			\begin{tabular}{|l|l|l|l|l|l|}
-				\hline
-				\textbf{Justice}	& \textbf{2013}  & \textbf{2014}  & \textbf{2015}  & \textbf{2016}  & \textbf{2017}  \\ \hline
-				civile   & 2 761 554 & 2 618 374 & 2 674 878 & 2 630 085 & 2 609 394 \\ \hline
-				pénale   & 1 303 469 & 1 203 339 & 1 206 477 & 1 200 575 & 1 180 949 \\ \hline
-				administrative & 221 882 & 230 477 & 228 876 & 231 909 & 242 882 \\ \hline
-			\end{tabular}
-			
-			\textit{\tiny{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}  
-		\end{center}
-		\caption{Nombre de décisions prononcées en France par an de 2013 à 2017.}\label{tab:intro:nbdecisionstats}
-	\end{table}
+	\begin{figure}
+		\includegraphics[width=\textwidth]{chiffres-justice.pdf}
+		\textit{\tiny{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}
+		\caption{Nombre de décisions prononcées en France par an de 2011 à 2017.}
+	\end{figure}		
 \end{frame}
 
 \begin{frame}[t]{Motivation: recherches et analyses sémantiques difficiles}
@@ -41,12 +31,11 @@
 	
 	Aucune analyse synthétique des décisions 
 	
-	%\begin{figure}
-	\fbox{\includegraphics[width=0.9\paperwidth]{jurica.png}}
-	
-	\textit{\tiny{Source: \url{LexisNexis.com}}} 
-	%\caption{Formulaire de recherche}
-	%\end{figure}
+	\begin{figure}
+		\centering
+		\fbox{\includegraphics[width=0.9\textwidth]{legifrance.PNG}}
+		\caption{Formulaire de Légifrance.}
+	\end{figure}
 \end{frame}
 
 \begin{frame}[c]{État de l'art : analyse automatique de décisions judiciaires}
@@ -92,16 +81,19 @@
 \end{frame}
 
 \begin{frame}[c]{Problème : annotation de sections, métadonnées, normes}
-    \tiny
-	\lstset{language=XMl}
-	\begin{columns}
-		\begin{column}{.50\linewidth}
-        \lstinputlisting{contents/CALYO1406777.xml}
-        \end{column}
-		\begin{column}{.50\linewidth}
-		\lstinputlisting{contents/CALYO1406777-2.xml}
-	    \end{column}
-	\end{columns}
+%    \tiny
+%	\lstset{language=XMl}
+%	\begin{columns}
+%		\begin{column}{.50\linewidth}
+%        \lstinputlisting{contents/CALYO1406777.xml}
+%        \end{column}
+%		\begin{column}{.50\linewidth}
+%		\lstinputlisting{contents/CALYO1406777-2.xml}
+%	    \end{column}
+%	\end{columns}
+\begin{figure}
+	\includegraphics[height=\textheight]{decision-marquee.png}
+\end{figure}
 \end{frame}
 
 \begin{frame}[c]{Problème : extraction des demandes}
