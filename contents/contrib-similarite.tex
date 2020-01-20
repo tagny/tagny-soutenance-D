@@ -2,9 +2,9 @@
 \subsection{Objectifs}
 \begin{frame}[c]{Objectifs}
 	
-	\begin{itemize} \scriptsize
+	\begin{itemize} \small
 		\item Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données.
-		\begin{exampleblock}{Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}
+		\begin{exampleblock}{Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}\small
 			\begin{itemize}
 				\item cas $a$ : un avocat négligent qui envoie son assignation de manière tardive; 
 				\item cas $b$ : un avocat qui n'a pas donné un conseil opportun, qui n'a pas soulevé le bon argument;
@@ -21,9 +21,9 @@
 		\item Apprentissage d'une distance basé sur la transformation
 	\begin{itemize} 
 		\item Formulation de la distance pour un ensemble de modifications connues	
-		\[{Dis_\mathcal{M}}(d,d') = {f}(\mathcal{M}_{(d,d')}) = \frac{\sum\limits_{(d[k], d'[k]) \in \mathcal{M}_{(d,d')}} Dis_{cos}(\overrightarrow{d[k]}, \overrightarrow{d'[k]})}{\vert d \vert}\] 
-		\item Génération d'un corpus d'entraînement	$B_\mathcal{M} = \lbrace ((d_1, d_2), {Dis}(d_1, d_2))_i\rbrace_{1 \leq i \leq \setsize{B_\mathcal{M}}}$
-		\item Entraînement d'un modèle de régression pour prédire la distance entre deux documents \[Dis_\mathcal{M}(d_i, d_j) = Reg_\mathcal{M}(\vec{d_{i}} - \vec{d_{j}})\]
+		\[{Dis_{M}}(d,d') = {f}({M}_{(d,d')}) = \frac{\sum\limits_{(d[k], d'[k]) \in {M}_{(d,d')}} Dis_{cos}(\overrightarrow{d[k]}, \overrightarrow{d'[k]})}{\vert d \vert}\] 
+		\item Génération d'un corpus d'entraînement	$B_{M} = \lbrace ((d_1, d_2), {Dis}(d_1, d_2))_i\rbrace_{1 \leq i \leq \setsize{B_{M}}}$
+		\item Entraînement d'un modèle de régression pour prédire la distance entre deux documents \[Dis_{M}(d_i, d_j) = Reg_{M}(\vec{d_{i}} - \vec{d_{j}})\]
 	\end{itemize}
 	\item Utilisation dans les algorithmes K-moyennes et K-medoides				
 	\end{itemize}	
@@ -56,7 +56,7 @@
 \end{frame}
 \begin{frame}{Sélection de la représentation : résultats}
 \begin{table}[!htb]
-	\footnotesize
+	\scriptsize
 	\begin{center}
 		\begin{tabular}[pos]{|l|c|p{0.7\textwidth}|}
 			\hline
@@ -80,12 +80,12 @@
 \subsection{Efficacité du regroupement}
 \begin{frame}{Regroupement pour la catégorie annotée}
 	\begin{table}[!htb]
-		\centering \tiny
+		\centering \scriptsize
 		\begin{tabular}[pos]{|l|l|c|c|c|c|c|c|c|}
 			\hline
 			{Distance}& {Algorithme}& {K}& {Silhouette}& {ARI} & {NMI} & {R} & {P} & ${F_1}$ \\ \hline
-			$Dis_\mathcal{M}$          & K-moyennes    & \textbf{3} & 0.438      & \textbf{0.407} & \textbf{0.423} & 0.552  & 0.654     & \textbf{0.599} \\ \hline
-			$Dis_\mathcal{M}$          & K-medoïdes  & 6 & 0.453      & 0.359 & 0.395 & 0.298  & 0.669     & 0.413 \\ \hline
+			$Dis_{M}$          & K-moyennes    & \textbf{3} & 0.438      & \textbf{0.407} & \textbf{0.423} & 0.552  & 0.654     & \textbf{0.599} \\ \hline
+			$Dis_{M}$          & K-medoïdes  & 6 & 0.453      & 0.359 & 0.395 & 0.298  & 0.669     & 0.413 \\ \hline
 			$Dis_{braycurtis}$ & K-moyennes    & 4 & 0.473      & 0.383 & 0.407 & 0.446  & 0.658     & 0.532 \\ \hline
 			$Dis_{braycurtis}$ & K-medoïdes  & 5 & 0.448      & 0.344 & 0.375 & 0.331  & 0.645     & 0.437 \\ \hline
 			$Dis_{cosine}$     & K-moyennes    & 4 & 0.528      & 0.383 & 0.407 & 0.446  & 0.658     & 0.532 \\ \hline
@@ -100,35 +100,35 @@
 			$Dis_{pearson}$    & K-medoïdes  & 2 & 0.171      & 0.152 & 0.166 & 0.598  & 0.482     & 0.534 \\ \hline
 			$Dis_{wmd}$      & K-medoïdes  & 2 & 0.332      & -0.016 & 0.002 & 0.545  & 0.397     & 0.459 \\ \hline
 		\end{tabular}
-		\caption{Evaluation de la catégorisation par K-moyennes et K-medoïdes sur $\mathcal{D}_{arcpa}$ avec détermination du nombre de clusters basée sur la silhouette.} \label{tab:similarite:validation-supervisee-optKbySilhouette}
+		\caption{\scriptsize Evaluation de la catégorisation par K-moyennes et K-medoïdes sur ${D}_{arcpa}$ avec détermination du nombre de clusters basée sur la silhouette.} \label{tab:similarite:validation-supervisee-optKbySilhouette}
 	\end{table}
 \end{frame}
 
 
 \begin{frame}[c]{Regroupement des catégories non annotées}
 	\newlength{\mrcell}
-	\setlength{\mrcell}{0.8cm}\tiny
+	\setlength{\mrcell}{0.8cm}
 	\begin{table}[!htb]
 		\tiny
 		\begin{center}						
 				\begin{tabular}[pos]{|l|l|l|c|c|}
 					\hline
-					$\mathcal{D}$& {Distance} & {Algorithme}& {K}  & $\bar{s}_K$ \\ \hline
-					\multirow{6}{\mrcell}{$\mathcal{D}_{dcppc}$ (91)} & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.451  \\ \cline{2-5}
-					& $Dis_\mathcal{M}$  & K-moyennes & 2 & 0.781  \\ \cline{2-5}
+					${D}$& {Distance} & {Algorithme}& {K}  & $\bar{s}_K$ \\ \hline
+					\multirow{6}{\mrcell}{${D}_{dcppc}$ (91)} & $Dis_{M}$ & K-medoïdes & 2 & 0.451  \\ \cline{2-5}
+					& $Dis_{M}$  & K-moyennes & 2 & 0.781  \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-medoïdes & 2 & 0.549 \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-moyennes & 2 & 0.925 \\ \cline{2-5}
 					& $Dis_{jaccard}$ & K-medoïdes & 2 & -0.016  \\ \cline{2-5}
 					& $Dis_{jaccard}$ & K-moyennes & 3 & 0.820 \\ \hline
-					\multirow{6}{\mrcell}{$\mathcal{D}_{doris}$ (59)}  & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.509  \\ \cline{2-5}
-					& $Dis_\mathcal{M}$ & K-moyennes & 3 & 0.527  \\ \cline{2-5}
+					\multirow{6}{\mrcell}{${D}_{doris}$ (59)}  & $Dis_{M}$ & K-medoïdes & 2 & 0.509  \\ \cline{2-5}
+					& $Dis_{M}$ & K-moyennes & 3 & 0.527  \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-medoïdes & 5 & 0.549 \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-moyennes & 4 & 0.586 \\ \cline{2-5}
 					& $Dis_{jaccard}$ & K-medoïdes & 3 & 0.600 \\ \cline{2-5}
 					& $Dis_{jaccard}$ & K-moyennes & 4 & 0.645 
 					\\ \hline
-					\multirow{6}{\mrcell}{$\mathcal{D}_{styx}$ (50)}  & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.669 \\ \cline{2-5}
-					& $Dis_\mathcal{M}$ & K-moyennes & 2 & 0.669 \\ \cline{2-5}
+					\multirow{6}{\mrcell}{${D}_{styx}$ (50)}  & $Dis_{M}$ & K-medoïdes & 2 & 0.669 \\ \cline{2-5}
+					& $Dis_{M}$ & K-moyennes & 2 & 0.669 \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-medoïdes & 5 & 0.695 \\ \cline{2-5}
 					& $Dis_{cosine}$ & K-moyennes & 4 & 0.705 \\ \cline{2-5}
 					& $Dis_{jaccard}$ & K-medoïdes & 6 & 0.635 \\ \cline{2-5}
@@ -140,7 +140,7 @@
 		
 		$\bar{s}_K$: largeur moyenne de la silhouette
 		
-		\caption{Evaluation non-supervisée des K-moyennes et K-medoïdes sur $\mathcal{D}_{dcppc}, \mathcal{D}_{doris}, \mathcal{D}_{styx}$.} \label{tab:similarite:validation-nonsupervisee}
+		\caption{\scriptsize Evaluation non-supervisée des K-moyennes et K-medoïdes sur ${D}_{dcppc}, {D}_{doris}, {D}_{styx}$.} \label{tab:similarite:validation-nonsupervisee}
 	\end{table}
 \end{frame}
 
