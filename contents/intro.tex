@@ -1,44 +1,49 @@
 \section{Introduction}
 
-\begin{frame}[c]{Expression du besoin}
-	
-	\begin{figure}
-		\includegraphics[width=0.7\textwidth]{lawyerwork.png}
-		\caption{Les juristes analysent les décisions}
-	\end{figure}
-	
-	\begin{block}{Pourquoi?}
+\subsection{Contexte}
+\begin{frame}[c]{Contexte}
+	\begin{itemize}
+		\item Utilité de la jurisprudence pour les juristes
 		\begin{itemize}
-			\item comprendre et comparer l'application de la loi (contentieux, ville, ...)
-			\item estimer le risque judiciaire
-			\item ... %anticiper les affaires futures
+			\item elle est analysée pour comprendre l'application de la loi
 		\end{itemize}
-	\end{block}
+	    \item Motivation : limite de l'analyse manuelle
+	    \begin{enumerate}
+	    	\item Gros volume de décisions 
+	    		\includegraphics[width=0.6\textwidth]{chiffres-justice.pdf}   	
+			\item Limite des moteurs de recherche juridique : 
+			\begin{itemize}
+				\item Pas de critère de recherche sémantique (catégorie de demande, type de faits, etc.)
+				\item pas d'analyse synthétique de corpus
+			\end{itemize}
+	    \end{enumerate}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Motivation: gros volume de décisions}
-	\textbf{Plus de 4 millions de décisions prononcées / an}
-	\begin{figure}
-		\includegraphics[width=\textwidth]{chiffres-justice.pdf}
-		\textit{\tiny{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}
-		\caption{Nombre de décisions prononcées en France par an de 2011 à 2017.}
-	\end{figure}		
-\end{frame}
+%\begin{frame}[c]{Motivation: gros volume de décisions}
+%	\textbf{Plus de 4 millions de décisions prononcées / an}
+%	\begin{figure}
+%		\includegraphics[width=\textwidth]{chiffres-justice.pdf}
+%		\textit{\tiny{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}
+%		\caption{Nombre de décisions prononcées en France par an de 2011 à 2017.}
+%	\end{figure}		
+%\end{frame}
+%
+%\begin{frame}[t]{Motivation: recherches et analyses sémantiques difficiles}
+%	
+%	Moteurs de recherche juridique à mots-clés 
+%	
+%	Aucune analyse synthétique des décisions 
+%	
+%	\begin{figure}
+%		\centering
+%		\fbox{\includegraphics[width=0.9\textwidth]{legifrance.PNG}}
+%		\caption{Formulaire de Légifrance.}
+%	\end{figure}
+%\end{frame}
 
-\begin{frame}[t]{Motivation: recherches et analyses sémantiques difficiles}
-	
-	Moteurs de recherche juridique à mots-clés 
-	
-	Aucune analyse synthétique des décisions 
-	
-	\begin{figure}
-		\centering
-		\fbox{\includegraphics[width=0.9\textwidth]{legifrance.PNG}}
-		\caption{Formulaire de Légifrance.}
-	\end{figure}
-\end{frame}
-
-\begin{frame}[c]{État de l'art : analyse automatique de décisions judiciaires}
+\subsection{État de l'art}
+\begin{frame}[c]{Activités en analyse automatique de décisions judiciaires}
 	\scriptsize
 	\begin{itemize}
 		\item Extraction d'information dans les décisions
@@ -65,32 +70,15 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Objectif : automatiser des tâches d'analyse de décisions}
-%	\only<1>{
-		\begin{figure}[!htb]
-		% pipeline-cassandra.pdf
+\subsection{Objectif de la thèse}
+\begin{frame}[c]{Objectif de la thèse}
+	\begin{figure}[!htb]	
 		\includegraphics[width=\textwidth]{Objectif_these.pdf}
 		\caption{Objectifs et exemples d'application de la thèse.} \label{fig:intro:objectif-these}
 	\end{figure}
-%}
-
-%	\only<2>{\begin{figure}[!htb]
-%		\includegraphics[width=\textwidth]{Objectif_these-problemes2.pdf}
-%		\caption{Problèmes correspondants en analyse de données textuelles.} \label{fig:intro:objectif-these-problemes}
-%	\end{figure}}
 \end{frame}
 
-\begin{frame}[c]{Problème : annotation de sections, métadonnées, normes}
-%    \tiny
-%	\lstset{language=XMl}
-%	\begin{columns}
-%		\begin{column}{.50\linewidth}
-%        \lstinputlisting{contents/CALYO1406777.xml}
-%        \end{column}
-%		\begin{column}{.50\linewidth}
-%		\lstinputlisting{contents/CALYO1406777-2.xml}
-%	    \end{column}
-%	\end{columns}
+\begin{frame}[c]{Problème : annotation de sections, méta-données, normes}
 \begin{figure}
 	\includegraphics[height=\textheight]{decision-marquee.png}
 \end{figure}
@@ -126,17 +114,7 @@ CONFIRME \textcolor{orange}{le jugement entrepris} en \textcolor{blue}{toutes se
 \end{table}
 \end{frame}
 
-\begin{frame}[c]{Problème : découverte des circonstances factuelles}
-  Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données.
-    \begin{exampleblock}{Categorie : action en responsabilite civile professionnelle contre les avocats}
-	\begin{itemize}
-    \item cas $a$ (46 documents): il s'agit d'un avocat négligent qui envoie son assignation de manière tardive ; %(champ sémantique: retard/délai/prescription)
-    \item cas $b$ (20 documents): il s'agit d'un avocat qui n'a pas donné un conseil opportun, qui n'a pas soulevé le bon argument;
-    \item cas $c$ (18 documents): un avocat qui n'a pas rédigé un acte valide ou réussi à obtenir un avantage fiscal; % (champ sémantique: rédacteur d'actes)
-    \item cas $d$ (3 documents): il s'agit d'un avocat attaqué par son adversaire et non par son propre client.
-    \end{itemize}
-    \end{exampleblock}
-\end{frame}
+
 
 \begin{frame}[c]{Positionnement en fouille de texte}	
 	\begin{figure}[!htb]

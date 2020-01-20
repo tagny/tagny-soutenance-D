@@ -1,5 +1,154 @@
 \section{Découverte des circonstances factuelles}
-\begin{frame}[c]{Apprendre la similarité par transformation de document}
-	\only<1>{1. Méthodes}
-	\only<2>{2. Résultats}		
+\subsection{Objectifs}
+\begin{frame}[c]{Objectifs}
+	
+	\begin{itemize} \scriptsize
+		\item Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données.
+		\begin{exampleblock}{Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}
+			\begin{itemize}
+				\item cas $a$ : un avocat négligent qui envoie son assignation de manière tardive; 
+				\item cas $b$ : un avocat qui n'a pas donné un conseil opportun, qui n'a pas soulevé le bon argument;
+				\item cas $c$ : un avocat qui n'a pas rédigé un acte valide ou réussi à obtenir un avantage fiscal; 
+				\item cas $d$ : un avocat attaqué par son adversaire et non par son propre client.
+			\end{itemize}
+		\end{exampleblock}
+		\item Formulation comme regroupement non supervisé des décisions
+	\end{itemize}
+\end{frame}
+\subsection{Méthode}
+\begin{frame}[c]{Méthode}
+	\begin{itemize}
+		\item Apprentissage d'une distance basé sur la transformation
+	\begin{itemize} 
+		\item Formulation de la distance pour un ensemble de modifications connues	
+		\[{Dis_\mathcal{M}}(d,d') = {f}(\mathcal{M}_{(d,d')}) = \frac{\sum\limits_{(d[k], d'[k]) \in \mathcal{M}_{(d,d')}} Dis_{cos}(\overrightarrow{d[k]}, \overrightarrow{d'[k]})}{\vert d \vert}\] 
+		\item Génération d'un corpus d'entraînement	$B_\mathcal{M} = \lbrace ((d_1, d_2), {Dis}(d_1, d_2))_i\rbrace_{1 \leq i \leq \setsize{B_\mathcal{M}}}$
+		\item Entraînement d'un modèle de régression pour prédire la distance entre deux documents \[Dis_\mathcal{M}(d_i, d_j) = Reg_\mathcal{M}(\vec{d_{i}} - \vec{d_{j}})\]
+	\end{itemize}
+	\item Utilisation dans les algorithmes K-moyennes et K-medoides				
+	\end{itemize}	
+\end{frame}
+
+\subsection{Sélection de la représentation des décisions}
+\begin{frame}{Sélection de la représentation : objectif}
+	Trouver la représentation qui discrimine les cas sur leur champ sémantique
+	
+	\begin{table}[ht]
+		\scriptsize
+		\begin{center}
+			\begin{tabular}{|l|p{.85\textwidth}|}
+				\hline
+				\textbf{Corpus} & \textbf{Terminologie} \\ \hline
+				\textit{arcpa} & chance, perte chance, avocat, perte, diligence, chance obtenir, perdre, client, devoir conseil, manquement
+				\\ \hline
+				\textit{cas a} & chance, perte chance, chance succès, perte, client, préjudice indemnisable, article code commerce, indemnisable, condamnation emporter, emporter nécessairement rejet
+				\\ \hline
+				\textit{cas b} & défense intérêt, intérêt client, avocat, contractuel égard, responsabilité contractuel droit, responsabilité professionnel avocat, contractuel droit commun, assurer défense intérêt, civil avocat, grief articuler
+				\\ \hline
+				\textit{cas c} & rédacteur acte, rédacteur, avocat rédacteur acte, avocat rédacteur, qualité rédacteur acte, rédaction acte, qualité rédacteur, projet acte, prendre initiative conseiller, initiative conseiller
+				\\ \hline
+				\textit{cas d} & revêtir aucun, revêtir aucun caractère, article code, article code procédure, faire référence aucun, fautif madame, civil profit autre, civil depuis, mention expresse, moyen dont
+				\\ \hline
+			\end{tabular}
+		\end{center}
+		\caption{Terminologies de  la catégorie  $arcpa$ et de ses cas}
+	\end{table}
+\end{frame}
+\begin{frame}{Sélection de la représentation : résultats}
+\begin{table}[!htb]
+	\footnotesize
+	\begin{center}
+		\begin{tabular}[pos]{|l|c|p{0.7\textwidth}|}
+			\hline
+			\textbf{Distance}&\textbf{Base$^a$}&\textbf{Silhouette optimale   (pondération, réduction, dim.)} \\ \hline
+			$Dis_{jaccard}$ & 0.001 & 0.212 (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{cos}$ & 0.002 & 0.202 (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{M}$ & -0.049 & 0.195 (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{braycurtis}$ & 0.002& 0.182 (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{euclidienne}$ & 0.001& 0.168  (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{manhattan}$ & -0.019& 0.17   (TP-NGL, FNM, 4) \\ \hline
+			$Dis_{pearson}$ & 0.014 & 0.057 (TP-CHI2, aucune, 19763) \\ \hline
+			$Dis_{wmd}$ & -0.096 &  - \\ \hline
+		\end{tabular}				
+	\end{center}
+	
+	$^a$ occurrence de mots pour $Dis_{wmd}$, et TF-IDF pour les autres distances.
+	\caption{Meilleures représentations sur la catégorisation manuelle.} \label{tab:similarite:silhouette-vecteur-manuel}
+\end{table}
+\end{frame}
+
+\subsection{Efficacité du regroupement}
+\begin{frame}{Regroupement pour la catégorie annotée}
+	\begin{table}[!htb]
+		\centering \tiny
+		\begin{tabular}[pos]{|l|l|c|c|c|c|c|c|c|}
+			\hline
+			{Distance}& {Algorithme}& {K}& {Silhouette}& {ARI} & {NMI} & {R} & {P} & ${F_1}$ \\ \hline
+			$Dis_\mathcal{M}$          & K-moyennes    & \textbf{3} & 0.438      & \textbf{0.407} & \textbf{0.423} & 0.552  & 0.654     & \textbf{0.599} \\ \hline
+			$Dis_\mathcal{M}$          & K-medoïdes  & 6 & 0.453      & 0.359 & 0.395 & 0.298  & 0.669     & 0.413 \\ \hline
+			$Dis_{braycurtis}$ & K-moyennes    & 4 & 0.473      & 0.383 & 0.407 & 0.446  & 0.658     & 0.532 \\ \hline
+			$Dis_{braycurtis}$ & K-medoïdes  & 5 & 0.448      & 0.344 & 0.375 & 0.331  & 0.645     & 0.437 \\ \hline
+			$Dis_{cosine}$     & K-moyennes    & 4 & 0.528      & 0.383 & 0.407 & 0.446  & 0.658     & 0.532 \\ \hline
+			$Dis_{cosine}$     & K-medoïdes  & 4 & 0.526      & \textbf{0.398} & \textbf{0.421} & 0.464  & 0.680     & \textbf{0.551} \\ \hline
+			$Dis_{euclidean}$  & K-moyennes    & 5 & 0.478      & 0.365 & 0.395 & 0.341  & 0.670     & 0.452 \\ \hline
+			$Dis_{euclidean}$  & K-medoïdes  & 5 & 0.456      & 0.313 & 0.346 & 0.335  & 0.619     & 0.434 \\ \hline
+			$Dis_{jaccard}$    & K-moyennes    & 4 & 0.570      & 0.367 & 0.391 & 0.439  & 0.643     & 0.522 \\ \hline
+			$Dis_{jaccard}$    & K-medoïdes  & 4 & \textbf{0.560}      & 0.389 & 0.412 & 0.451  & 0.666     & 0.538 \\ \hline
+			$Dis_{manhattan}$  & K-moyennes    & 4 & 0.482      & 0.376 & 0.400 & 0.452  & 0.657     & 0.535 \\ \hline
+			$Dis_{manhattan}$  & K-medoïdes  & 5 & 0.452      & 0.368 & 0.397 & 0.345  & 0.675     & 0.456 \\ \hline
+			$Dis_{pearson}$    & K-moyennes    & 2 & \textbf{0.611}      & 0.054 & 0.072 & 0.746  & 0.453     & 0.564 \\ \hline
+			$Dis_{pearson}$    & K-medoïdes  & 2 & 0.171      & 0.152 & 0.166 & 0.598  & 0.482     & 0.534 \\ \hline
+			$Dis_{wmd}$      & K-medoïdes  & 2 & 0.332      & -0.016 & 0.002 & 0.545  & 0.397     & 0.459 \\ \hline
+		\end{tabular}
+		\caption{Evaluation de la catégorisation par K-moyennes et K-medoïdes sur $\mathcal{D}_{arcpa}$ avec détermination du nombre de clusters basée sur la silhouette.} \label{tab:similarite:validation-supervisee-optKbySilhouette}
+	\end{table}
+\end{frame}
+
+
+\begin{frame}[c]{Regroupement des catégories non annotées}
+	\newlength{\mrcell}
+	\setlength{\mrcell}{0.8cm}\tiny
+	\begin{table}[!htb]
+		\tiny
+		\begin{center}						
+				\begin{tabular}[pos]{|l|l|l|c|c|}
+					\hline
+					$\mathcal{D}$& {Distance} & {Algorithme}& {K}  & $\bar{s}_K$ \\ \hline
+					\multirow{6}{\mrcell}{$\mathcal{D}_{dcppc}$ (91)} & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.451  \\ \cline{2-5}
+					& $Dis_\mathcal{M}$  & K-moyennes & 2 & 0.781  \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-medoïdes & 2 & 0.549 \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-moyennes & 2 & 0.925 \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-medoïdes & 2 & -0.016  \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-moyennes & 3 & 0.820 \\ \hline
+					\multirow{6}{\mrcell}{$\mathcal{D}_{doris}$ (59)}  & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.509  \\ \cline{2-5}
+					& $Dis_\mathcal{M}$ & K-moyennes & 3 & 0.527  \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-medoïdes & 5 & 0.549 \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-moyennes & 4 & 0.586 \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-medoïdes & 3 & 0.600 \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-moyennes & 4 & 0.645 
+					\\ \hline
+					\multirow{6}{\mrcell}{$\mathcal{D}_{styx}$ (50)}  & $Dis_\mathcal{M}$ & K-medoïdes & 2 & 0.669 \\ \cline{2-5}
+					& $Dis_\mathcal{M}$ & K-moyennes & 2 & 0.669 \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-medoïdes & 5 & 0.695 \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-moyennes & 4 & 0.705 \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-medoïdes & 6 & 0.635 \\ \cline{2-5}
+					& $Dis_{jaccard}$  & K-moyennes & 4 & 0.690 \\ \hline
+				\end{tabular}
+		\end{center}
+		
+		$^*$ Nombre de documents
+		
+		$\bar{s}_K$: largeur moyenne de la silhouette
+		
+		\caption{Evaluation non-supervisée des K-moyennes et K-medoïdes sur $\mathcal{D}_{dcppc}, \mathcal{D}_{doris}, \mathcal{D}_{styx}$.} \label{tab:similarite:validation-nonsupervisee}
+	\end{table}
+\end{frame}
+
+\begin{frame}{Résumé}
+	\begin{enumerate}
+		\item Formulation comme problème de regroupement non supervisé de décisions de la catégorie
+		\item Méthode d'apprentissage d'une distance de dis-similarité au sein d'une catégorie
+		\item Sélection de la représentation des textes qui reflète la notion subjective de similarité de l'expert
+		\item Expérimentation des propositions sur 7 catégories de demandes dont 1 annotées
+	\end{enumerate}
 \end{frame}
