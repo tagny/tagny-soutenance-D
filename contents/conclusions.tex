@@ -1,8 +1,37 @@
 \section{Conclusions}
+\subsection{Bilan}
 \begin{frame}[c]{Conclusions : bilan}
-
+	\small
+\begin{block}{Contributions}
+	\begin{itemize}
+		\item Etude de l'application du HMM  et CRF pour détecter les sections et les entités juridiques
+		\item Approche d'identification des demandes basée sur la proximité entre les termes-clés et les sommes d'argent		
+		\item Extensions du Gini-PLS pour identifier le sens du résultat
+		\item Approche d'apprentissage d'une distance de similarité pour regrouper les décisions suivant les circonstances factuelles.
+	\end{itemize}
+\end{block}
+\begin{alertblock}{Limites}
+	\begin{itemize}
+		\item Évaluation sur de faibles quantité de données annotées;
+		\item Non expérimentation de méthodes récentes (réseaux de neurones)
+	\end{itemize}
+\end{alertblock}
 \end{frame}
 
+\subsection{Perspectives}
 \begin{frame}[c]{Conclusions : perspectives}
-	
+	\small
+	\begin{block}{Amélioration des propositions}
+		\begin{itemize}
+			\item \textbf{Désambiguïser les entités} détectées pour indexer les décisions
+			\item Expérimentation des approches récentes pour l'identification des \textbf{demandes formalisées comme relation entre montant demandé et montant accordé}
+			\item Découverte des circonstances factuelles vue comme \textbf{modélisation thématique}
+		\end{itemize}
+	\end{block}
+	\begin{block}{Applications}
+		\begin{itemize}
+			\item \textbf{Anonymisation des décisions} : confidentialité des informations
+			\item \textbf{Analyse prédictive} : identifier les raisons qui poussent les juges à accepter une demande
+		\end{itemize}
+	\end{block}
 \end{frame}

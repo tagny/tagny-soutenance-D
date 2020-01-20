@@ -1,6 +1,23 @@
 \section{Annotation des sections et entités judiciaires}
-\begin{frame}[c]{Appliquer le HMM ou le CRF pour l'annotation}
-	\only<1>{1. Méthodes : 	Modèles probabilistes à états et observations
+\begin{frame}[c]{Contributions}
+	\begin{itemize}	
+		\item Formulation du problème
+		\begin{itemize}
+			\item Détection des sections par étiquetage de séquence de lignes
+			\item Détection des entités par étiquetage de séquence de mots
+		\end{itemize}
+	\item Etude de l'application du HMM et du CRF
+	\begin{enumerate}		
+		\item sélection de modèle:
+		\begin{figure}
+			\includegraphics[width=0.8\textwidth]{structuration-training.png}
+		\end{figure}
+		\item Analyse de l'impact de la quantité de données d'entraînement
+	\end{enumerate}
+\end{itemize}
+\end{frame}
+\begin{frame}[c]{Etudes de l'application du HMM et CRF}
+Modèles probabilistes d'étiquetage de séquences
 
 \scriptsize
 \begin{table}[]%width=\linewidth
@@ -47,7 +64,4 @@ $P_\lambda(S|O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) * P(o_t \vert s_{t
 Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du texte
 
 \textbf{Entrainement fait sur des séquences préalablement étiquetées}
-}
-	\only<2>{2. Données}
-	\only<3>{3. Résultats}	
 \end{frame}

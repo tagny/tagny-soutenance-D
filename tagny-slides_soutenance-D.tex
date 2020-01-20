@@ -20,13 +20,17 @@
 % in preamble
 \usepackage{chronology}
 \usepackage{pgf}
-\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+%\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[titlenotnumbered,ruled,vlined,noend,linesnumbered,french, onelanguage]{algorithm2e}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
 \usepackage{array,multirow}
 \usepackage{nameref}
 \usepackage{listings}
 \usepackage{eurosym}
+%\usepackage{subfigure}
+\usepackage[font=small,singlelinecheck=off,justification=centering]{caption}
+\usepackage[font=footnotesize]{subcaption}
 \usepackage{xcolor}
 \definecolor{shadecolor}{RGB}{51,51,51}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
@@ -40,7 +44,8 @@
 %\usepackage[defaultsans]{cantarell}
 
 \newcommand{\p}{\mathbb{P}}
-
+\newcommand{\setsize}[1]{{\vert#1\vert}}
+\newcommand{\twodots}{\mathrel{{.}\,{.}}\nobreak}
 \setbeamerfont{title}{series=\upshape}
 \setbeamertemplate{footline}{\hfill\footnotesize\insertframenumber\hskip3pt\null\vskip3pt}
 
@@ -63,6 +68,7 @@
 \addto\captionsfrench{%
 \renewcommand{\figurename}{\scriptsize {\scshape Figure}}
 \renewcommand{\tablename}{\scriptsize {\scshape Table}}
+%\renewcommand{\ALG@name}{\tiny {\scshape Algorithme}}
 }
 
 \lstset{
@@ -112,12 +118,13 @@
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 \title{\large Méthodes d'analyse sémantique de corpus de décisions jurisprudentielles}
-\subtitle{\scriptsize Soutenance de thèse de doctorat en informatique de l'IMT Mines Alès}
+\subtitle{\scriptsize Soutenance de thèse}
 %\date{\small{\jobname}}
 %\date{\scriptsize Début de thèse: 15 Décembre 2015}
-\date{\scriptsize 24 janvier 2020}
-\author{\small Gildas TAGNY NGOMPÉ}
-\institute{\tiny \textbf{Jury:} \begin{itemize}
+\date{\scriptsize le 24 janvier 2020}
+\author{\small présentée par Gildas TAGNY NGOMPÉ}
+\institute{\tiny \textbf{devant le jury composé de:} 
+\begin{itemize}
 \item Stéphane MUSSARD, Professeur, Université de Nîmes (Directeur de thèse)
 \item Jacky MONTMAIN, Professeur, IMT Mines Alès (Co-directeur de thèse)
 \item Sandra BRINGAY, Professeur, Université Paul Valéry Montpellier (Rapporteur)
