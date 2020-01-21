@@ -7,7 +7,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}{Sectionner les décisions pour organiser l'extraction}
+\begin{frame}{Sectionner pour organiser l'extraction des connaissances}
 \scriptsize
 \begin{columns}
 	\begin{column}{.45\linewidth}
@@ -123,7 +123,7 @@ semithick]
 \end{tikzpicture}					
 \\%[0.25em]
 \midrule
-$P_\lambda(S,O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) * P(o_t \vert s_{t})$  & $P_\lambda(S|O) = \frac{1}{Z(O)}exp\left( \sum\limits_{t=1}^{T}\sum\limits_{k} \lambda_k f_k(s_{t-1},s_t, o_t) \right) $ \\
+$P(S,O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) P(o_t \vert s_{t})$  & $P_\lambda(S|O) = \frac{1}{Z(O)}exp\left( \sum\limits_{t=1}^{T}\sum\limits_{k} \lambda_k f_k(s_{t-1},s_t, o_t) \right) $ \\
 % & & & \\
 \tiny \cite{Seymore1999hmm} & \tiny \cite{peng2006crf} \\ 
 \bottomrule
@@ -137,11 +137,24 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 \textbf{Entrainement sur des séquences préalablement étiquetées}
 \end{frame}
 
-\subsection{Sélection de modèle}
-\begin{frame}{Sélection de modèle}
+\subsection{Représentation et sélection de modèle}
+\begin{frame}{Représentation et sélection de modèle : objectif}
 		\begin{figure}
-			\includegraphics[width=0.8\textwidth]{structuration-training.png}
+			\includegraphics[width=0.6\textwidth]{structuration-training.png}
 		\end{figure}
+	\begin{itemize} \scriptsize
+		\item Descripteurs de lignes pour les sections : longueur ? position ? etc.
+		\item Descripteurs de mots pour les entités : est-ce une initiale ("B.") ? est-ce un mot clé de citation de loi ? etc.
+		\item Schéma d'étiquetage : distinction des parties d'une entité \tiny
+		\begin{tabular}{l|ccccccccc}
+			& \textit{composée} & \textit{de} & \textit{Madame} & \textit{Martine} & \textit{JEAN} & , & \textit{Président} & \textit{de} & \textit{chambre} \\ 
+			IO & O & O & I-JUGE & I-JUGE & I-JUGE & O & I-FONCTION & I-FONCTION & I-FONCTION \\
+			BIO & O & O & B-JUGE & I-JUGE & I-JUGE & O & B-FONCTION & I-FONCTION & I-FONCTION \\
+			IEO & O & O & I-JUGE & I-JUGE & E-JUGE & O & I-FONCTION & I-FONCTION & E-FONCTION\\
+			BIEO & O & O & B-JUGE & I-JUGE & E-JUGE & O & B-FONCTION & I-FONCTION & E-FONCTION \\
+		\end{tabular}
+		\item \scriptsize sélection du sous-ensemble de descripteurs court et aux meilleurs résultat (recherche par BDS et SFFS)
+	\end{itemize}	
 \end{frame}
 %\begin{frame}{Définition manuelle des caractéristiques}
 %\begin{itemize} \scriptsize
@@ -175,18 +188,36 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 %\end{itemize}
 %\end{frame}
 
-\begin{frame}{Résultats}
+\begin{frame}{Sélection de modèle : résultats (CRF)}
 \begin{figure}
 	\begin{itemize}
 		\item sélection du schéma d'étiquetage
+		\begin{itemize}
+			\item Les schémas plus complexes que IO rendent l'entraînement plus long
+			\item Les schémas complexes ne semblent pas améliorer la détection des sections(baisse de $F_1$ de près de $20\%$)
+			\item Les schémas complexes améliorent légèrement la détection d'entité de moins de $3\%$
+		\end{itemize}
 		\item sélection des descripteurs
+		\begin{itemize}
+			\item Lenteur des algorithmes BDS et SFFS (plus de 15h)
+			\item BDS réduit de moitié
+			\item SFFS réduit beaucoup plus
+			\item Pas d'amélioration ou détérioration considérable de la détection
+		\end{itemize}
 	\end{itemize}
 \end{figure}
 \end{frame}
 
 \subsection{Discussions}
-\begin{frame}{Confusions de classes}
-
+\begin{frame}{Confusions de labels}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{confusion_matrix_entete.png} \hfill
+	\includegraphics[width=0.38\textwidth]{confusion_matrix_section.png}
+	%\textcolor{red}{Matrices de confusion}
+	\caption{Matrice de confusion des modèles basés CRF}
+	\label{fig:structuration:matrice-confusion-entete}
+\end{figure}
 \end{frame}
 
 
@@ -231,13 +262,31 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 %BDS et SFFS \textcolor{red}{très lents (plus de 10 h lors de nos tests)}
 %\end{frame}
 
-\begin{frame}{Nombre nécessaire de données d'entraînement}
+\begin{frame}{Impact de la quantité de décisions d'entraînement}
 \begin{figure}[!h]
 \includegraphics[width=0.9\textwidth]{lc-crf.png}
 \caption{Résultats en fonction du nombre de données d'entraînement (fractions d'environ 380 décisions)}\label{p4_crf-learning-curves}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Description manuelle vs. représentation apprise}
-
+\begin{frame}{Description manuelle vs. représentation apprise} \scriptsize
+\begin{tabular}{|l|l|l|l|l|l|l|}
+	\hline
+	&               \multicolumn{3}{c}{\textbf{CRF + descripteurs manuels}} & \multicolumn{3}{|c|}{\textbf{BiLSTM-CRF}}   \\ \cline{2-7}
+	& \textit{Precision} & \textit{Rappel}                     & $F_1$ & \textit{Precision} & \textit{Rappel}      & $F_1$ \\ \hline
+	\textbf{appelant}      & 82.49              & 69.42                               & 74.72       & 80.26              & 71.53                & 75.04       \\ 
+	\textbf{avocat}        & 90.15              & 89.02                               & 89.56       & 84.93              & 87.88                & 86.36       \\ 
+	\textbf{date}          & 95.34              & 91.46                               & 93.12       & 95.04              & 90.79                & 92.63       \\ 
+	\textbf{fonction}      & 95.87              & 95.08                               & 95.44       & 92.69              & 93.48                & 93.03       \\ 
+	\textbf{formation}     & 96.91              & 91.31                               & 93.7        & 91.05              & 89.47                & 89.84       \\ 
+	\textbf{intervenant}   & 51.42              & 32.71                               & 36.8        & 31.48              & 20                   & 23.11       \\ 
+	\textbf{intime}        & 76.01              & 79.15                               & 77.22       & 67.7               & 75.43                & 70.83       \\ 
+	\textbf{juge}          & 95.67              & 94.07                               & 94.84       & 95.44              & 95.56                & 95.46       \\ 
+	\textbf{juridiction}   & 98.55              & 98.25                               & 98.33       & 97.95              & 99.22                & 98.57       \\ 
+	\textbf{rg}            & 95.46              & 95.29                               & 95.27       & 91.13              & 97.26                & 93.92       \\ 
+	\textbf{ville}         & 98.33              & 93.01                               & 94.71       & 91.43              & 95.34                & 93.3        \\ 
+	\textbf{norme}         & 91.08              & 90.27                               & 90.67       & 91.43              & 92.65                & 92.03       \\ \hline
+	\noalign{\smallskip}\hline\noalign{\smallskip}
+	\textbf{Evaluation globale} & 92.2               & 90.09                               & 91.12       & 89.21              & 90.43                & 89.81       \\ \hline
+\end{tabular}
 \end{frame}
