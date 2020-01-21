@@ -24,6 +24,7 @@
 		\item Présence de plusieurs demandes de catégories similaires et/ou différentes dans une même décision
 		\item Toutes les catégories ne sont pas connues d'avance (+500 catégories)
 		\item Difficile d'annoter une base d'évaluation pour toutes les couvrir
+		\item Enoncés non structurés, avec des \textcolor{orange}{références}, et des  \textcolor{blue}{agrégations}
 	\end{itemize}
 \end{alertblock}
 \end{frame}
@@ -39,8 +40,10 @@
 %		\end{itemize}
 %	\item Phase d'extraction
 	\begin{enumerate} \scriptsize
-		\item Identification de la catégorie par classification de textes 
-		\item Exploiter la proximité entre \textbf{vocabulaire de la catégorie} et sommes d’argent pour extraire les quanta:
+		\item Détermination automatique de la terminologie (déclencheurs) de la catégorie \[ngl(t,c) = \frac{\sqrt{N} (N_{t,c} N_{\overline{t},\overline{c}}) - (N_{t,\overline{c}} N_{\overline{t},c})}{\sqrt{N_t N_{\overline{t}} \vert D_c \vert \vert D_{\overline{c}} \vert }}.\]
+		\item Détection de la présence de la catégorie par classification de la décision ($c$ vs. $\overline{c}$)
+		\item Identification des passages de demandes et résultats 
+		\item Exploiter la proximité entre les déclencheurs de la catégorie  et sommes d’argent pour extraire les quanta:
 		
 		Section Litige : identification de la demande
 		
@@ -52,7 +55,7 @@
 				
 				Statuant à nouveau ...
 				
-				- \textbf{[} les \underline{condamner} au paiement d' une somme de  \textit{$3 000,00$ €} \textbf{pour procédure abusive} et
+				- \textbf{[} les \underline{condamner} au paiement d' une somme de  \fbox{\parbox{0.13\textwidth}{\textit{\fontfamily{qcs}\selectfont{3 000,00 €}}}} \textbf{pour procédure abusive} et
 				aux entiers dépens ; \textbf{]}$_\text{demande\_danais}$
 				
 				 ...							
@@ -64,7 +67,7 @@
 			
 			CONFIRME le jugement entrepris en toutes ses dispositions.
 	}}
-		\item Lier les informations relatives à la même demande
+		\item Mise en correspondance des informations relatives à la même demande
 	\end{enumerate}
 	
 %	\end{itemize}
@@ -78,10 +81,17 @@
 \end{frame}
 
 
-\begin{frame}[c]{Résultat : Extraction}
-	\begin{itemize} \small
+\begin{frame}[c]{Résultats de l'extraction}
+	\begin{itemize} \scriptsize
 		\item Détection de catégorie facile par des classifieurs traditionnels (K-plus-proches-voisins, SVM, Bayésien naïf, Arbre) : $98.8\% \leq$ F$_1$-mesure $\leq 100\%$
-		\item Extraction des quantas et sens du résultat
-			\includegraphics[width=0.9\textwidth]{f1-quanta-et-sens.png}
+		\item Résultat plus facile à extraire que le montant
+			\includegraphics[width=0.8\textwidth]{f1-quanta-et-sens.png}			
+		\item Source d'erreurs:
+		\begin{itemize} \scriptsize
+			\item Sélection	difficile de déclencheurs rares
+			\item Non exploitation des références aux jugements antérieurs
+			\item Certains quanta sont absents des sections Litige et Dispositif
+			\item Mauvaise méthode de mise en correspondance
+		\end{itemize}
 	\end{itemize}
 \end{frame}
