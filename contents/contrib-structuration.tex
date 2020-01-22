@@ -1,15 +1,17 @@
 \section{Annotation des sections et entités judiciaires}
 
-\subsection{Objectif}
-\begin{frame}[c]{Références dans l'entête, normes dans le reste}
+\subsection{Objectif de la tâche}
+\begin{frame}[t]{\mysubsectiontitle}
+	Détecter les méta-données de référence et les normes utilisées
 \begin{figure}
 	\includegraphics[height=\textheight]{decision-marquee.png}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Sectionner pour organiser l'extraction des connaissances}
-\scriptsize
-\begin{columns}
+\begin{frame}[t]{\mysubsectiontitle}
+Sectionner pour organiser l'extraction des connaissances
+\tiny
+\begin{columns}\tiny
 	\begin{column}{.45\linewidth}
 		\fbox{\begin{minipage}{\textwidth}ARRÊT N°
 				
@@ -45,7 +47,7 @@
 		\end{minipage}}
 		\vspace{0.1cm}
 		
-		{\normalsize \textbf{Entêtes}: méta-données}
+		{\textbf{Entêtes}: méta-données}
 	\end{column}
 	\begin{column}{.55\linewidth}
 		\fbox{\begin{minipage}{\textwidth}FAITS, PROCEDURE, ...
@@ -58,7 +60,7 @@
 		\end{minipage}}
 		\vspace{0.1cm}
 		
-		{\normalsize \textbf{Corps}: demandes, arguments et normes }
+		{\textbf{Corps}: demandes, arguments et normes }
 		
 		\vspace{0.4cm}
 		
@@ -80,14 +82,14 @@
 		\end{minipage}}
 		\vspace{0.1cm}
 		
-		{\normalsize \textbf{Dispositif}: résultats et normes}
+		{\textbf{Dispositif}: résultats et normes}
 		
 	\end{column}
 \end{columns}
 \end{frame}
 
 \subsection{Approches probabilistes de détection d'entités}
-\begin{frame}{Approches probabilistes de détection d'entités}
+\begin{frame}[t]{\mysubsectiontitle}
 Modèles probabilistes à états et observations
 
 \scriptsize
@@ -137,58 +139,26 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 \textbf{Entrainement sur des séquences préalablement étiquetées}
 \end{frame}
 
-\subsection{Représentation et sélection de modèle}
-\begin{frame}{Représentation et sélection de modèle : objectif}
-		\begin{figure}
-			\includegraphics[width=0.6\textwidth]{structuration-training.png}
-		\end{figure}
+\subsection{Sélection de modèle}
+\begin{frame}[t]{\mysubsectiontitle}		
+	Méthodes explorées
 	\begin{itemize} \scriptsize
 		\item Descripteurs de lignes pour les sections : longueur ? position ? etc.
 		\item Descripteurs de mots pour les entités : est-ce une initiale ("B.") ? est-ce un mot clé de citation de loi ? etc.
 		\item Schéma d'étiquetage : distinction des parties d'une entité \tiny
 		\begin{tabular}{l|ccccccccc}
-			& \textit{composée} & \textit{de} & \textit{Madame} & \textit{Martine} & \textit{JEAN} & , & \textit{Président} & \textit{de} & \textit{chambre} \\ 
-			IO & O & O & I-JUGE & I-JUGE & I-JUGE & O & I-FONCTION & I-FONCTION & I-FONCTION \\
-			BIO & O & O & B-JUGE & I-JUGE & I-JUGE & O & B-FONCTION & I-FONCTION & I-FONCTION \\
-			IEO & O & O & I-JUGE & I-JUGE & E-JUGE & O & I-FONCTION & I-FONCTION & E-FONCTION\\
-			BIEO & O & O & B-JUGE & I-JUGE & E-JUGE & O & B-FONCTION & I-FONCTION & E-FONCTION \\
+			& \textit{composée} & \textit{de} & \textit{Madame} & \textit{Martine} & \textit{JEAN} & , & \textit{Président} & \textit{de} & ... \\ 
+			IO & O & O & I-JUGE & I-JUGE & I-JUGE & O & I-FONCTION & I-FONCTION & ... \\
+			BIO & O & O & B-JUGE & I-JUGE & I-JUGE & O & B-FONCTION & I-FONCTION & ... \\
+			IEO & O & O & I-JUGE & I-JUGE & E-JUGE & O & I-FONCTION & I-FONCTION & ...\\
+			BIEO & O & O & B-JUGE & I-JUGE & E-JUGE & O & B-FONCTION & I-FONCTION & ... \\
 		\end{tabular}
 		\item \scriptsize sélection du sous-ensemble de descripteurs court et aux meilleurs résultat (recherche par BDS et SFFS)
 	\end{itemize}	
 \end{frame}
-%\begin{frame}{Définition manuelle des caractéristiques}
-%\begin{itemize} \scriptsize
-%\item Descripteurs de lignes pour les sections
-%\begin{tabular}{|l|l|}
-%	\hline
-%	\multicolumn{1}{|c|}{Type} & \multicolumn{1}{c|}{Descripteur} \\ \hline
-%	Forme &  ses premiers mots  \\
-%	& sa longueur absolue  \\ 
-%	& sa longueur relative  \\ \hline
-%	Contexte & le numéro de ligne  \\
-%	&  partie du document contenant la ligne  \\
-%	& premiers mots de la ligne précédente  \\ 
-%	& ... \\
-%\end{tabular}
-%\item Descripteur de mots pour les entités
-%\begin{tabular}{|l|p{0.78\textwidth}|}
-%	\hline
-%	\multicolumn{1}{|c|}{Type} & \multicolumn{1}{c|}{Descripteur} \\ \hline
-%	Forme &  le mot   \\ 
-%	& \og commence-t-il par une lettre majuscule ? \fg{}  \\
-%	&\og initiale solitaire ? \fg{}\\
-%	& \og S'agit-il d'un mot-clé de règles juridiques ? \fg{}  \\ 
-%	& ... \\ \hline
-%	Syntaxe & rôle grammatical du mot \\ \hline
-%	Sémantique & thème du mot \\ 
-%	& ... \\ \hline
-%	Contexte & les mots précédents  \\
-%	& ... \\ 
-%\end{tabular}	
-%\end{itemize}
-%\end{frame}
 
-\begin{frame}{Sélection de modèle : résultats (CRF)}
+\begin{frame}[t]{\mysubsectiontitle}
+	Résultats (CRF)
 \begin{figure}
 	\begin{itemize}
 		\item sélection du schéma d'étiquetage
@@ -208,8 +178,9 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 \end{figure}
 \end{frame}
 
-\subsection{Discussions}
-\begin{frame}{Confusions de labels}
+\subsection{Discussions des résultats}
+\begin{frame}[t]{\mysubsectiontitle}
+	Confusions de labels
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.6\textwidth]{confusion_matrix_entete.png} \hfill
@@ -220,56 +191,17 @@ Objectif: Trouver la séquence la plus probable d'étiquetage pour l'ensemble du
 \end{figure}
 \end{frame}
 
-
-%\begin{frame}{Sélection des caractéristiques}
-%\begin{table}[!h]
-%\tiny
-%\begin{tabular}{l|c|ccc}
-%\hline\noalign{\smallskip}
-%Detection Task & Tagger & {Token-level F1} & {Entity-level F1}& Features subset \\ \hline
-%%\noalign{\smallskip}\svhline\noalign{\smallskip}
-%\multirow{7}{*}{Sections} 		& \multirow{4}{*}{CRF} & 99.31 & 90.48 & BDS  \\
-%&  & \textbf{99.55} & 85.76 & \textbf{SFFS} \\
-%&  & 99.46 & 90.03 & ALL \\
-%&  & 91.75 & 60.26 & token \\  \cline{2-5}
-%& \multirow{3}{*}{HMM} & \textbf{90.99} & 3.89 & \textbf{absLength} \\ 
-%& & 86.97 & 3.65 & relLength \\   
-%&  & 37.59 & 18.81 & token \\ \hline
-%\multirow{7}{*}{Header entities}	& \multirow{4}{*}{CRF} & 92.69 & 90.47 & BDS  \\
-%&  & \textbf{93.00} & 90.76 & \textbf{SFFS}  \\ 
-%&  & 92.74 & 90.81 & ALL \\
-%&  & 82.73 & 72.17 & token \\ \cline{2-5}
-%&  \multirow{3}{*}{HMM}  & \textbf{78.61} & \textbf{56.93} &  \textbf{token} \\ 
-%&    & 68.04 & 32.96 &  lemma\_W0 \\ 
-%&    & 38.54 & 7.95 &  POS \\ \hline
-%\multirow{6}{*}{Norms} 			& \multirow{4}{*}{CRF} & \textbf{96.31} & 90.80 & \textbf{BDS} \\ 
-%&  & 95.57 & 89.29 & SFFS \\ 
-%&  & 95.87 & 90.76 & ALL \\
-%&  & 94.26 & 85.72 & token \\ \cline{2-5}
-%&  \multirow{2}{*}{HMM} & \textbf{91.66} & \textbf{74.9} &  \textbf{token} \\ 
-%&   & 91.54 & 69.35 &  lemma\_W0 \\ 
-%%  \noalign{\smallskip}\svhline\noalign{\smallskip}
-%%  & & token-level & entity-level & \\ \hline
-%%\noalign{\smallskip}\hline\noalign{\smallskip}
-%\end{tabular}
-%\caption{Impact de la réduction des caractéristiques}
-%\end{table}
-%
-%%Réduit de \textbf{moitié} le nombre de caractéristiques
-%
-%%Améliore légèrement les résultats
-%
-%BDS et SFFS \textcolor{red}{très lents (plus de 10 h lors de nos tests)}
-%\end{frame}
-
-\begin{frame}{Impact de la quantité de décisions d'entraînement}
+\begin{frame}[t]{\mysubsectiontitle}
+	Impact de la quantité de décisions d'entraînement
 \begin{figure}[!h]
 \includegraphics[width=0.9\textwidth]{lc-crf.png}
-\caption{Résultats en fonction du nombre de données d'entraînement (fractions d'environ 380 décisions)}\label{p4_crf-learning-curves}
+\caption{Evolution de la F1-mesure en fonction de la fraction utilisée}\label{p4_crf-learning-curves}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Description manuelle vs. représentation apprise} \scriptsize
+\begin{frame}[t]{\mysubsectiontitle}
+	Description manuelle vs. représentation apprise
+\scriptsize
 \begin{tabular}{|l|l|l|l|l|l|l|}
 	\hline
 	&               \multicolumn{3}{c}{\textbf{CRF + descripteurs manuels}} & \multicolumn{3}{|c|}{\textbf{BiLSTM-CRF}}   \\ \cline{2-7}

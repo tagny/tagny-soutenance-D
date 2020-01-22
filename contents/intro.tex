@@ -1,17 +1,15 @@
 \section{Introduction}
 
 \subsection{Contexte}
-\begin{frame}[c]{Contexte}
+\begin{frame}[c]{\mysubsectiontitle}
+	Motivations
 	\begin{itemize}
-		\item Utilité de la jurisprudence pour les juristes
-		\begin{itemize}
-			\item elle est analysée pour comprendre l'application de la loi
-		\end{itemize}
-	    \item Motivation : limite de l'analyse manuelle
+		\item La jurisprudence analysée par les juristes pour comprendre l'application de la loi 
+	    \item Difficultés de l'analyse manuelle
 	    \begin{enumerate}
-	    	\item Gros volume de décisions 
+	    	\item Existence d'un gros volume de décisions 
 	    		\includegraphics[width=0.6\textwidth]{chiffres-justice.pdf}   	
-			\item Limite des moteurs de recherche juridique : 
+			\item Les moteurs de recherche juridique limitées : 
 			\begin{itemize}
 				\item Pas de critère de recherche sémantique (catégorie de demande, type de faits, etc.)
 				\item pas d'analyse synthétique de corpus
@@ -20,32 +18,10 @@
 	\end{itemize}
 \end{frame}
 
-%\begin{frame}[c]{Motivation: gros volume de décisions}
-%	\textbf{Plus de 4 millions de décisions prononcées / an}
-%	\begin{figure}
-%		\includegraphics[width=\textwidth]{chiffres-justice.pdf}
-%		\textit{\tiny{\textbf{Source}: \url{http://www.justice.gouv.fr/statistiques-10054/chiffres-cles-de-la-justice-10303/}}}
-%		\caption{Nombre de décisions prononcées en France par an de 2011 à 2017.}
-%	\end{figure}		
-%\end{frame}
-%
-%\begin{frame}[t]{Motivation: recherches et analyses sémantiques difficiles}
-%	
-%	Moteurs de recherche juridique à mots-clés 
-%	
-%	Aucune analyse synthétique des décisions 
-%	
-%	\begin{figure}
-%		\centering
-%		\fbox{\includegraphics[width=0.9\textwidth]{legifrance.PNG}}
-%		\caption{Formulaire de Légifrance.}
-%	\end{figure}
-%\end{frame}
-
-\subsection{État de l'art}
-\begin{frame}[c]{Activités en analyse automatique de décisions judiciaires}
-	\scriptsize
-	\begin{itemize}
+%\subsection{État de l'art}
+\begin{frame}[t]{\mysubsectiontitle}
+	Activités en analyse automatique de décisions judiciaires	
+	\begin{itemize}\scriptsize
 		\item Extraction d'information dans les décisions
 		\begin{itemize}  \scriptsize
 			\item entités juridiques \cite{Waltl2016lexia, andrew2018legalNerAndRelation}
@@ -71,89 +47,12 @@
 \end{frame}
 
 \subsection{Objectif de la thèse}
-\begin{frame}[c]{Objectif de la thèse}
-	\begin{figure}[!htb]	
-		\includegraphics[width=\textwidth]{Objectif_these.pdf}
-		\caption{Objectifs et exemples d'application de la thèse.} \label{fig:intro:objectif-these}
-	\end{figure}
+\begin{frame}[c]{\mysubsectiontitle}
+	Tâches et exemples d'applications
+		
+	\includegraphics[width=\textwidth]{Objectif_these.pdf}	
 \end{frame}
 
-\begin{frame}[c]{Positionnement en fouille de texte}	
-	\begin{figure}[!htb]
-		\includegraphics[width=\textwidth]{Objectif_these-problemes2.pdf}
-		\caption{Tâches abordées en analyse de données textuelles.} \label{fig:intro:objectif-these-problemes}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Difficultés rencontrées par l'automatisation de ces tâches}
-	\begin{itemize}
-		\item Les décisions sont des textes non-structurés
-		\item Le langage juridique est complexe
-	\end{itemize}	
-
-	\tiny	
-	\begin{columns}
-		\begin{column}{.50\linewidth}
-			ARRÊT N°
-			
-			R.G: 11/03924
-			
-			...
-			
-			{COUR D'APPEL} DE {NÎMES}
-			
-			{CHAMBRE CIVILE}
-			
-			{1ère Chambre A}
-			
-			ARRÊT DU {20 MARS 2012}
-			
-			APPELANTE:
-			
-			{Madame Michéle A.} ...
-			
-			assistée de la {SELARL VAJOU}, ...
-			
-			INTIMES:
-			
-			{Monsieur Martial B} ...
-			
-			assisté de la {SCP MARION GUIZARD PATRICIA SERVAIS}, ...
-			
-			COMPOSITION DE LA COUR LORS DU DÉLIBÉRÉ:
-			
-			{M. Dominique BRUZY, Président}
-			
-			{M. Serge BERTHET, Conseiller}
-			
-			...
-		\end{column}
-		\begin{column}{.50\linewidth}
-			FAITS, PROCEDURE, ...
-			
-			Madame Michèle A. demande:
-			
-			...
-			
-			- de condamner Madame JONES-B. à lui payer la somme de {2.500 euros} au titre de l'{article 700 du Code de Procédure Civile}, 
-			
-			\vspace{0.4cm}
-			
-			PAR CES MOTIFS, LA COUR:
-			
-			...
-			
-			Vu l'{article 809 du Code de Procédure Civile},
-			
-			...
-			
-			{Déboute Madame A. de sa demande de provision sur dommages-intérêts.}
-			
-			...
-			
-			Vu l'{article 700 du Code de Procédure Civile},
-			
-			Condamne Madame JONES-B. à verser à Madame A. la somme de {2.500 euros}.
-		\end{column}
-	\end{columns}
+\begin{frame}[c]{\mysubsectiontitle}	
+	Formulation en analyse de données textuelles	\includegraphics[width=\textwidth]{Objectif_these-problemes2.pdf}		
 \end{frame}

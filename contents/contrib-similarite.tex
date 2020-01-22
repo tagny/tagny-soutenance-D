@@ -1,11 +1,11 @@
 \section{Découverte des circonstances factuelles}
-\subsection{Objectifs}
-\begin{frame}[c]{Objectifs}
+\subsection{Objectif de la tâche}
+\begin{frame}[t]{\mysubsectiontitle}
 	
 	\begin{itemize} \small
 		\item Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données.
-		\begin{exampleblock}{Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}\small
-			\begin{itemize}
+		\begin{exampleblock}{\small Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}
+			\begin{itemize}\scriptsize
 				\item cas $a$ : un avocat négligent qui envoie son assignation de manière tardive; 
 				\item cas $b$ : un avocat qui n'a pas donné un conseil opportun, qui n'a pas soulevé le bon argument;
 				\item cas $c$ : un avocat qui n'a pas rédigé un acte valide ou réussi à obtenir un avantage fiscal; 
@@ -15,10 +15,10 @@
 		\item Formulation comme regroupement non supervisé des décisions
 	\end{itemize}
 \end{frame}
-\subsection{Méthode : apprentissage d'une distance et utilisation pour du regroupement}
-\begin{frame}[c]{Méthode}
-	\begin{itemize}
-		\item Apprentissage d'une distance basé sur la transformation
+\subsection{Méthode}
+\begin{frame}[t]{\mysubsectiontitle}
+	\begin{itemize}%\scriptsize
+		\item Apprentissage d'une distance basé sur la transformation d'un document en l'autre
 	\begin{itemize} 
 		\item Formulation de la distance pour un ensemble de modifications connues	
 		\[{Dis_{M}}(d,d') = {f}({M}_{(d,d')}) = \frac{\sum\limits_{(d[k], d'[k]) \in {M}_{(d,d')}} Dis_{cos}(\overrightarrow{d[k]}, \overrightarrow{d'[k]})}{\vert d \vert}\] 
@@ -30,7 +30,7 @@
 \end{frame}
 
 \subsection{Sélection de la représentation des décisions}
-\begin{frame}{Sélection de la représentation : objectif}
+\begin{frame}[t]{\mysubsectiontitle}
 	Trouver la représentation qui discrimine les cas sur leur champ sémantique
 	
 	\begin{table}[ht]

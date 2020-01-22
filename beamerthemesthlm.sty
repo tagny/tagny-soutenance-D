@@ -231,7 +231,8 @@ xrightmargin=0.5em
 %	05. TABLE OF CONTENTS
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 \setbeamertemplate{section in toc}[sections numbered]
-\setbeamertemplate{subsection in toc}[subsections numbered]
+%\setbeamertemplate{subsection in toc}[subsections numbered]
+\setbeamertemplate{subsection in toc}{\leavevmode\leftskip=3.2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
 
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %	06. PROGRESS BAR & HEADLINE
@@ -310,6 +311,8 @@ xrightmargin=0.5em
   \begin{frame}[plain]
     %\vspace{2em}\usebeamerfont{section title}
     %\progressbar@sectionprogressbar%    
+    \usebeamerfont{section in toc}
+    \usebeamerfont{subsection in toc}
     \tableofcontents[currentsection,hideothersubsections]
   \end{frame}
   \endgroup

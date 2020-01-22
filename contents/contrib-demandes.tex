@@ -1,6 +1,6 @@
-\section{Identification des demandes}
-\subsection{Objectif : identifier les informations sur les demandes}
-\begin{frame}[c]{Objectif : identifier les informations sur les demandes}
+\section{Identification des demandes des parties}
+\subsection{Objectif de la tâche}
+\begin{frame}[t]{\mysubsectiontitle}
 \begin{exampleblock}{\scriptsize Exemple : dommage-intérêts pour procédure abusive (danais)}
 	%danais/CASAI1401082.xml
 	\scriptsize
@@ -11,7 +11,7 @@
 	
 	Statuant à nouveau ...
 	
-	- les condamner au paiement d' une somme de  \textbf{3 000,00 € pour procédure abusive} et
+	- les condamner au paiement d' une somme de  \textbf{3 000,00 \euro pour procédure abusive} et
 	aux entiers dépens ; ...
 	
 	La cour ... CONFIRME \textcolor{red}{le jugement entrepris} en \textcolor{blue}{toutes ses dispositions}.
@@ -24,14 +24,14 @@
 		\item Présence de plusieurs demandes de catégories similaires et/ou différentes dans une même décision
 		\item Toutes les catégories ne sont pas connues d'avance (+500 catégories)
 		\item Difficile d'annoter une base d'évaluation pour toutes les couvrir
-		\item Enoncés non structurés, avec des \textcolor{orange}{références}, et des  \textcolor{blue}{agrégations}
+		\item Enoncés non structurés, avec des références, et des agrégations
 	\end{itemize}
 \end{alertblock}
 \end{frame}
 
-\subsection{Méthode : identifier les passages, puis les informations}
+\subsection{Méthode proposée}
 
-\begin{frame}[c]{Méthode : extraction d'une catégorie à la fois}
+\begin{frame}[t]{\mysubsectiontitle}
 %	\begin{itemize}	\scriptsize
 %		\item Phase d'entraînement	
 %		\begin{itemize} \scriptsize
@@ -55,7 +55,7 @@
 				
 				Statuant à nouveau ...
 				
-				- \textbf{[} les \underline{condamner} au paiement d' une somme de  \fbox{\parbox{0.13\textwidth}{\textit{\fontfamily{qcs}\selectfont{3 000,00 €}}}} \textbf{pour procédure abusive} et
+				- \textbf{[} les \underline{condamner} au paiement d' une somme de  \fbox{\parbox{0.13\textwidth}{\textit{\fontfamily{qcs}\selectfont{3 000,00 \euro}}}} \textbf{pour procédure abusive} et
 				aux entiers dépens ; \textbf{]}$_\text{demande\_danais}$
 				
 				 ...							
@@ -72,8 +72,9 @@
 	
 %	\end{itemize}
 \end{frame}
-\subsection{Expérimentations sur 6 catégories de demandes}
-\begin{frame}{Données}
+\subsection{Résultats expérimentaux}
+\begin{frame}[t]{\mysubsectiontitle}
+	Données
 	\begin{figure}[!htb]
 		\includegraphics[width=0.8\textwidth]{chartDataset.png}
 		\caption{\scriptsize Répartitions des demandes dans les documents annotées.}\label{fig:quanta:hist-repartition-docs}
@@ -81,11 +82,12 @@
 \end{frame}
 
 
-\begin{frame}[c]{Résultats de l'extraction}
+\begin{frame}[t]{\mysubsectiontitle}
+	Efficacité de la méthode
 	\begin{itemize} \scriptsize
 		\item Détection de catégorie facile par des classifieurs traditionnels (K-plus-proches-voisins, SVM, Bayésien naïf, Arbre) : $98.8\% \leq$ F$_1$-mesure $\leq 100\%$
 		\item Résultat plus facile à extraire que le montant
-			\includegraphics[width=0.8\textwidth]{f1-quanta-et-sens.png}			
+			\includegraphics[width=0.8\textwidth]{f1-quanta-et-sens.pdf}			
 		\item Source d'erreurs:
 		\begin{itemize} \scriptsize
 			\item Sélection	difficile de déclencheurs rares

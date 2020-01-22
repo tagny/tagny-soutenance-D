@@ -4,7 +4,7 @@
 %
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-\documentclass[newPxFont,pagenumber]{beamer}
+\documentclass[pagenumber]{beamer}
 \usetheme{sthlm}
 %\usecolortheme{sthlmv42}
 
@@ -13,7 +13,8 @@
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
-\usepackage[normalem]{ulem}
+%\usepackage[normalem]{ulem}
+\usepackage{Roboto}
 \usepackage{caption}
 \captionsetup{font=scriptsize}
 %\usepackage[font=footnotesize]{subcaption}
@@ -37,6 +38,11 @@
 
 \makeatletter
 \newcommand*{\currentname}{\@currentlabelname}
+
+% Automatic frame titles and subtitles
+\newcommand{\mysubsectiontitle}{\thesection.\thesubsection~\insertsubsectionhead}
+\newcommand{\mysectiontitle}{\thesection~\insertsectionhead}
+
 \makeatother
 
 \graphicspath{ {fig/} }
@@ -70,6 +76,7 @@
 \renewcommand{\tablename}{\scriptsize {\scshape Table}}
 %\renewcommand{\ALG@name}{\tiny {\scshape Algorithme}}
 }
+
 
 \lstset{
 	basicstyle=\tiny,
@@ -117,13 +124,13 @@
 %
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-\title{\large Méthodes d'analyse sémantique de corpus de décisions jurisprudentielles}
-\subtitle{\scriptsize Soutenance de thèse}
+\title{Méthodes d'analyse sémantique \\ de corpus de décisions jurisprudentielles}
+\subtitle{\small Soutenance de thèse}
 %\date{\small{\jobname}}
 %\date{\scriptsize Début de thèse: 15 Décembre 2015}
-\date{\scriptsize le 24 janvier 2020}
-\author{\small présentée par Gildas TAGNY NGOMPÉ}
-\institute{\tiny \textbf{devant le jury composé de:} 
+\date{\scriptsize 24 janvier 2020}
+\author{\centering Gildas TAGNY NGOMPÉ}
+\institute{\scriptsize Jury: \tiny
 \begin{itemize}
 \item Stéphane MUSSARD, Professeur, Université de Nîmes (Directeur de thèse)
 \item Jacky MONTMAIN, Professeur, IMT Mines Alès (Co-directeur de thèse)
@@ -159,8 +166,8 @@ pdfcreator = {}
 %	TABLE OF CONTENTS: Plan
 %
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-\section*{Plan}
-\begin{frame}[c]{\currentname}
+%\section*{Plan}
+\begin{frame}[c]{Plan}
 \tableofcontents[hideallsubsections]
 \end{frame}
 
@@ -173,7 +180,7 @@ pdfcreator = {}
 
 \include{contents/conclusions}
 
-\section*{Questions}
+%\section*{Questions}
 \begin{frame}
 \begin{center}
 	Questions
