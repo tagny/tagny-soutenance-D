@@ -19,13 +19,13 @@
 \end{frame}
 
 \begin{frame}[t]{\mysubsectiontitle}
-	Algorithmes classiques existants
-	\begin{itemize}
-		\item Classifieur bayésien naïf
-		\item K-plus-proches-voisins
-		\item SVM
+	Plusieurs algorithmes classiques existent
+	\begin{itemize} \small
+		\item Classifieur bayésien naïf \cite{duda1973patternclass} 
+		\item K-plus-proches-voisins \cite{cover1967knn}
+		\item SVM \cite{vapnik1995statlearning}
 		\item Arbre de décision
-		\item Analyse discriminante linéaire et quadratique
+		\item Analyse discriminante linéaire \cite{fisher1936linearDA} et quadratique \cite{McLachlan1992DiscrAnalyStatPattRecog-QDA}
 		\item NBSVM \cite{wang2012nbsvm}
 		\item fastText \cite{grave2017fasttextcls}
 		\item etc.	
@@ -33,27 +33,42 @@
 \end{frame}
 
 
-\subsection{Méthode : adaptations de la régression Gini-PLS}
+\subsection{Méthode proposée : adaptations de la régression Gini-PLS}
 
 \begin{frame}[t]{\mysubsectiontitle}
-PLS standard (Régression partielle des moindres carrés) 
-
-Réduction supervisée des dimensions $x_1, x_2, ..., x_p$ en composantes orthogonales $t_1, ...., t_h$
-
-$t_h = w_{h1} x_1 + \cdots + w_{hj} x_j + \cdots + w_{hp} x_p$
-
-avec $w_{hj} = \frac{cov(u_{(h-1)j}, \epsilon_h)}{\sqrt{\sum_p^{j=1} cov^2(u_{(h-1)j}, \epsilon_h)}}$
-, $y=c_1 t_1 + ... + c_h t_h + \epsilon_h$,
-
-et $x_j=\beta_{1j} t_1 + ... + \beta_{hj} t_h + u_{(h-1)j}$
+Régression	Gini-PLS
+\begin{itemize}\small
+	\item PLS \cite{wold1966pls} (régression partielle des moindres carrés) 
+	\begin{itemize}\scriptsize
+		\item Réduction supervisée de dimensions $x_1, x_2, ..., x_m$ en composantes orthogonales $t_1, ...., t_h$
+		
+		\[t_h = \sum_{k=1}^m w_{hk}\cdot \hat{U}_{(h-1)k}\] 
+		
+		avec $\hat{U}_{0k} = x_{k}$, $\forall h > 0, \hat{U}_{hk}$ est le résidu de la régression de $x_k$ sur $t_1, ..., t_{h-1}$ ()
+		
+		et $w_{hj} = \frac{cov(\varepsilon_h, \hat{U}_{(h-1)j})}{\sqrt{\sum_{j=1}^m cov^2(\varepsilon_h, \hat{U}_{(h-1)j})}}$
+		\item Régression de $y$ dans l'espace réduit
+		\[y=c_1 t_1 + ... + c_h t_h + \varepsilon_h\]			
+		%\item intérêt : robustesse au problème de haute dimension et élimination du pro
+	\end{itemize}
+	\item Gini-PLS  \cite{mussard2018ginipls}
+	\begin{itemize} \scriptsize
+		\item Remplacement de la covariance $cov(x_j, y)$ par la covariance de Gini $cog(y; x_j) := cov(y; R(x_j))$
+		\item 
+	\end{itemize}	 	
+	
+\end{itemize} 
 \end{frame}
 
 \begin{frame}[t]{\mysubsectiontitle}
 \begin{enumerate}
 \setlength\itemsep{1.5em}
 
-\item Gini-PLS: 
-élimination de la sensibilité au \textit{outliers} en remplaçant la covariance $cov(x_j, y)$ par la covariance de Gini $cog(y; x_j) := cov(y; R(x_j))$ pour l'estimation des résidus $u_{(h)j}$ et des poids $w_{hj}$ \cite{mussard2018ginipls}
+\item Gini-PLS généralisé
+\begin{itemize}
+	\item Utilisation de l'opérateur co-Gini généralisé : $cog_\nu(x_\ell,x_k) := -\nu cov(x_\ell,r_{k}^{\nu-1}) ; \ \nu > 1$
+\end{itemize}
+ pous disposer d'un curseur $\nu$ permettant de régler le compromis entre l'atténuation de la variabilité des variables et l'influence des queues de distributions de ces variables
 
 \item Logit-PLS:  $\forall j > 1$, les $w_{hj} $ sont les coefficients de la régression logistique de $y$ sur les composantes $t_1, ..., t_{h-1}, u_{(h-1)j}$ \cite{tenenhaus2005logitpls}
 
@@ -93,8 +108,8 @@ et $x_j=\beta_{1j} t_1 + ... + \beta_{hj} t_h + u_{(h-1)j}$
 %\end{frame}
 
 \begin{frame}[t]{\mysubsectiontitle}
-	Classifieurs PLS vs. aux classifieurs classiques
-\begin{table}[!htb]	
+	Comaparaison des classifieurs PLS aux classifieurs classiques
+
 	\scriptsize
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
@@ -108,15 +123,13 @@ et $x_j=\beta_{1j} t_1 + ... + \beta_{hj} t_h + u_{(h-1)j}$
 		$tf - \Delta_{DF}$ & GiniLogitPLS & 0.578 & 0.09 & 0.547 \\ \hline
 		- & NBSVM & 0.494 & 0.174 & 0.434  \\ \hline
 		- & fastText & 0.412 & 0.256 & 0.127 \\ \hline
-	\end{tabular}
-	\caption{Comparaison des combinaisons représentation+algorithme proposées avec les arbres, fastText et NBSVM pour la détection du sens du résultat.}\label{tab:sensrst:global}
-\end{table}
+	\end{tabular}	
 
 \end{frame}
 
 \begin{frame}[t]{\mysubsectiontitle}
 	Amélioration de la classification par restriction du document
-\begin{table}[!htb]
+
 	\tiny
 	\centering
 	
@@ -147,7 +160,5 @@ et $x_j=\beta_{1j} t_1 + ... + \beta_{hj} t_h + u_{(h-1)j}$
 		& demande\_resultat\_a\_resultat\_context & $logave-dsidf$ & GiniLogitPLS & 0.917 \\ 
 		& litige\_motifs\_dispositif & $tf-rf$& GiniPLS & 0.833 \\ \hline
 	\end{tabular}
-	\caption{Impact de la restriction des documents à certains passages sur l'identification du sens du résultat.}\label{tab:sensrst:zone}
-\end{table}
-
+	
 \end{frame}

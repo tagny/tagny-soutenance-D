@@ -1,31 +1,27 @@
 \section{Découverte des circonstances factuelles}
 \subsection{Objectif de la tâche}
 \begin{frame}[t]{\mysubsectiontitle}
-	
-	\begin{itemize} \small
-		\item Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données.
-		\begin{exampleblock}{\small Catégorie : action en responsabilité civile professionnelle contre les avocats (arcpa)}
+	Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données
+	\begin{itemize} \scriptsize
+		\item Exemple : catégorie "action en responsabilité civile professionnelle contre les avocats" (\textit{arcpa})
 			\begin{itemize}\scriptsize
 				\item cas $a$ : un avocat négligent qui envoie son assignation de manière tardive; 
 				\item cas $b$ : un avocat qui n'a pas donné un conseil opportun, qui n'a pas soulevé le bon argument;
 				\item cas $c$ : un avocat qui n'a pas rédigé un acte valide ou réussi à obtenir un avantage fiscal; 
 				\item cas $d$ : un avocat attaqué par son adversaire et non par son propre client.
 			\end{itemize}
-		\end{exampleblock}
-		\item Formulation comme regroupement non supervisé des décisions
+		\item Formulation comme un problème de regroupement non supervisé des décisions
 	\end{itemize}
 \end{frame}
 \subsection{Méthode}
 \begin{frame}[t]{\mysubsectiontitle}
-	\begin{itemize}%\scriptsize
-		\item Apprentissage d'une distance basé sur la transformation d'un document en l'autre
-	\begin{itemize} 
+	Apprentissage et utilisation d'une distance basée sur la transformation d'un document en un autre
+	\begin{itemize} \scriptsize
 		\item Formulation de la distance pour un ensemble de modifications connues	
 		\[{Dis_{M}}(d,d') = {f}({M}_{(d,d')}) = \frac{\sum\limits_{(d[k], d'[k]) \in {M}_{(d,d')}} Dis_{cos}(\overrightarrow{d[k]}, \overrightarrow{d'[k]})}{\vert d \vert}\] 
 		\item Génération d'un corpus d'entraînement	$B_{M} = \lbrace ((d_1, d_2), {Dis}(d_1, d_2))_i\rbrace_{1 \leq i \leq \setsize{B_{M}}}$
-		\item Entraînement d'un modèle de régression pour prédire la distance entre deux documents \[Dis_{M}(d_i, d_j) = Reg_{M}(\vec{d_{i}} - \vec{d_{j}})\]
-	\end{itemize}
-	\item Utilisation de la distance dans un algorithmes de regroupement (K-moyennes et K-medoides)
+		\item Entraînement d'un modèle de régression pour prédire la distance entre deux documents \[Dis_{M}(d_i, d_j) = Reg_{M}(\vec{d_{i}} - \vec{d_{j}})\]	
+		\item Utilisation de la distance dans un algorithmes de regroupement (K-moyennes et K-medoides)
 	\end{itemize}	
 \end{frame}
 

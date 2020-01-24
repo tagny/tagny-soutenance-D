@@ -4,9 +4,9 @@
 \begin{frame}[t]{\mysubsectiontitle}
 	Motivations
 	\begin{itemize}
-		\item La jurisprudence analysée par les juristes pour comprendre l'application de la loi 
+		\item La jurisprudence est analysée par les juristes pour comprendre l'application de la loi 
 	    \item Difficultés de l'analyse manuelle
-	    \begin{enumerate}
+	    \begin{itemize}
 	    	\item Existence d'un gros volume de décisions 
 	    		\includegraphics[width=0.6\textwidth]{chiffres-justice.pdf}   	
 			\item Les moteurs de recherche juridique limitées : 
@@ -14,7 +14,7 @@
 				\item Pas de critère de recherche sémantique (catégorie de demande, type de faits, etc.)
 				\item pas d'analyse synthétique de corpus
 			\end{itemize}
-	    \end{enumerate}
+	    \end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -24,24 +24,24 @@
 	\begin{itemize}\scriptsize
 		\item Extraction d'information dans les décisions
 		\begin{itemize}  \scriptsize
-			\item entités juridiques \cite{Waltl2016lexia, andrew2018legalNerAndRelation}
-			\item faits \cite{wyner2010extractlegalelts, wyner2010casefactors, Shulayeva2017recognfactprincip}
-			\item définitions de concept juridiques \cite{Waltl2016lexia,waltl2017legaliegerman}
-			\item arguments \cite{moens2007NBvsMaxent4arguments}
+			\item Entités juridiques \cite{Waltl2016lexia, andrew2018legalNerAndRelation}
+			\item Faits \cite{wyner2010extractlegalelts, wyner2010casefactors, Shulayeva2017recognfactprincip}
+			\item Définitions de concept juridiques \cite{Waltl2016lexia,waltl2017legaliegerman}
+			\item Arguments \cite{moens2007NBvsMaxent4arguments}
 		\end{itemize}
 		\item Classification de décisions
 		\begin{itemize} \scriptsize
 			\item Prédiction des décisions de justice \cite{Ashley2009classifCases, Aletras2016predictDecisionECHR}
-			\item identification de la formation et la période \cite{Sulea2017predictareadecision,sulea2017legalEnsSVM}
-			\item identifier la sentence prononcée (Chine) \cite{ma2018wmdchinesecase}
+			\item Identification de la formation et la période \cite{Sulea2017predictareadecision,sulea2017legalEnsSVM}
+			\item Identifier la sentence prononcée \cite{ma2018wmdchinesecase}
 		\end{itemize}
 		\item Similarité entre décisions 
 		\begin{itemize}  \scriptsize
-			\item décisions qui citent les mêmes lois et précédents \cite{nair2018judgsimassorule}
-			\item recherche d'affaires antérieures pertinentes  \cite{thenmozhi2017legalprecedretriev}
-			\item identifier la sentence prononcée (Chine) \cite{ma2018wmdchinesecase}
-			\item similarité basée sur la question discutée et les faits sous-jacents (Inde) \cite{kumar2011judgmentsimilarity}
-			\item regroupement non-supervisé \cite{raghuveer2012legalclusteringLDA}
+			\item Recherche des décisions qui citent les mêmes lois et précédents \cite{nair2018judgsimassorule}
+			\item Recherche d'affaires antérieures pertinentes  \cite{thenmozhi2017legalprecedretriev}
+			\item Classification supervisée des décision \cite{ma2018wmdchinesecase}
+			\item Similarité basée sur la question discutée et les faits sous-jacents   \cite{kumar2011judgmentsimilarity}
+			\item Regroupement non-supervisé \cite{raghuveer2012legalclusteringLDA}
 		\end{itemize}
 	\end{itemize}
 \end{frame}
