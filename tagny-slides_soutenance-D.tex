@@ -42,7 +42,9 @@
 % Automatic frame titles and subtitles
 \newcommand{\mysubsectiontitle}{\thesection.\thesubsection~\insertsubsectionhead}
 \newcommand{\mysectiontitle}{\thesection~\insertsectionhead}
-
+\newcommand{\cov}{\text{cov}}
+\newcommand{\cor}{\text{cor}}
+\newcommand{\cog}{\text{cog}}
 \makeatother
 
 \graphicspath{ {fig/} }
@@ -171,14 +173,14 @@ pdfcreator = {}
 \tableofcontents[hideallsubsections]
 \end{frame}
 
-%\include{contents/intro}
-%
-%\include{contents/contrib-structuration}
-%\include{contents/contrib-demandes}
+\include{contents/intro}
+
+\include{contents/contrib-structuration}
+\include{contents/contrib-demandes}
 \include{contents/contrib-sensresultat}
-%\include{contents/contrib-similarite}
-%
-%\include{contents/conclusions}
+\include{contents/contrib-similarite}
+
+\include{contents/conclusions}
 
 \section*{Questions}
 \begin{frame}

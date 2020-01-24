@@ -26,6 +26,7 @@
 		\item SVM \cite{vapnik1995statlearning}
 		\item Arbre de décision
 		\item Analyse discriminante linéaire \cite{fisher1936linearDA} et quadratique \cite{McLachlan1992DiscrAnalyStatPattRecog-QDA}
+		\item Logit-PLS \cite{tenenhaus2005logitpls}
 		\item NBSVM \cite{wang2012nbsvm}
 		\item fastText \cite{grave2017fasttextcls}
 		\item etc.	
@@ -33,10 +34,10 @@
 \end{frame}
 
 
-\subsection{Méthode proposée : adaptations de la régression Gini-PLS}
+\subsection{Méthodes proposées : adaptations de la régression Gini-PLS}
 
 \begin{frame}[t]{\mysubsectiontitle}
-Régression	Gini-PLS
+Régression Gini-PLS
 \begin{itemize}\small
 	\item PLS \cite{wold1966pls} (régression partielle des moindres carrés) 
 	\begin{itemize}\scriptsize
@@ -44,85 +45,64 @@ Régression	Gini-PLS
 		
 		\[t_h = \sum_{k=1}^m w_{hk}\cdot \hat{U}_{(h-1)k}\] 
 		
-		avec $\hat{U}_{0k} = x_{k}$, $\forall h > 0, \hat{U}_{hk}$ est le résidu de la régression de $x_k$ sur $t_1, ..., t_{h-1}$ ()
+		avec $\hat{U}_{0k} = x_{k}$, $\forall h > 0, \hat{U}_{hk}$ est le résidu de la régression de $x_k$ sur $t_1, ..., t_{h-1}$ 
 		
-		et $w_{hj} = \frac{cov(\varepsilon_h, \hat{U}_{(h-1)j})}{\sqrt{\sum_{j=1}^m cov^2(\varepsilon_h, \hat{U}_{(h-1)j})}}$
-		\item Régression de $y$ dans l'espace réduit
+		et $w_{hj} = \frac{\cov(\varepsilon_h, \hat{U}_{(h-1)j})}{\sqrt{\sum_{j=1}^m cov^2(\varepsilon_h, \hat{U}_{(h-1)j})}}$ (solution de $\max \cov(y,w_hX)$ s.c. $\| w_h\|=1$)
+		\item Régression de la variable dépendante $y$ dans l'espace réduit
 		\[y=c_1 t_1 + ... + c_h t_h + \varepsilon_h\]			
 		%\item intérêt : robustesse au problème de haute dimension et élimination du pro
 	\end{itemize}
 	\item Gini-PLS  \cite{mussard2018ginipls}
 	\begin{itemize} \scriptsize
-		\item Remplacement de la covariance $cov(x_j, y)$ par la covariance de Gini $cog(y; x_j) := cov(y; R(x_j))$
-		\item 
+		\item Remplacement de la covariance $\cov(x_j, y)$ par la covariance de Gini $\cog(y; x_j) := \cov(y; R(x_j))$
+		\item Élimination de la sensibilité du PLS aux valeurs aberrantes
 	\end{itemize}	 	
 	
 \end{itemize} 
 \end{frame}
 
 \begin{frame}[t]{\mysubsectiontitle}
-\begin{enumerate}
+	Algorithmes proposés {\scriptsize (en cours de rédaction pour la revue \textit{\textbf{Stats}})}
+\begin{itemize} \small
 \setlength\itemsep{1.5em}
 
 \item Gini-PLS généralisé
-\begin{itemize}
-	\item Utilisation de l'opérateur co-Gini généralisé : $cog_\nu(x_\ell,x_k) := -\nu cov(x_\ell,r_{k}^{\nu-1}) ; \ \nu > 1$
+\begin{itemize} \scriptsize
+	\item Utilisation de l'opérateur co-Gini généralisé : \[\cog_\nu(x_\ell,x_k) := -\nu \cov(x_\ell,r_{k}^{\nu-1}) ; \ \nu > 1\] où $r_{k}$ est le vecteur rang décroissant de la variable $x_k$
+	
+	\item $\nu$ contrôle le compromis entre l'atténuation de la variabilité des variables ($\nu \rightarrow 1$) et l'influence des queues de distributions ($\nu \rightarrow \infty$)	
 \end{itemize}
- pous disposer d'un curseur $\nu$ permettant de régler le compromis entre l'atténuation de la variabilité des variables et l'influence des queues de distributions de ces variables
 
-\item Logit-PLS:  $\forall j > 1$, les $w_{hj} $ sont les coefficients de la régression logistique de $y$ sur les composantes $t_1, ..., t_{h-1}, u_{(h-1)j}$ \cite{tenenhaus2005logitpls}
+%\item Logit-PLS:  $\forall j > 1$, les $w_{hj} $ sont les coefficients de la régression logistique de $y$ sur les composantes $t_1, ..., t_{h-1}, u_{(h-1)j}$ \cite{tenenhaus2005logitpls}
 
-\item Gini-Logit-PLS: covariance Gini pour $u_{(h)j}$ et coefficient Logit pour les $w_{hj}$
-\end{enumerate}
+\item Logit-Gini-PLS  généralisé : 
+\begin{itemize} \scriptsize
+	\item Estimation des $w_{hj}$ à partir du paramètre $\beta$ de $P(y_i = 1 / X = X_i) = \frac{\exp\left\{X_i \beta \right\}}{1+\exp\left\{ X_i \beta \right\}}$, où $X_i$ étant une observation
+	\[w_j = \frac{\beta_j}{\| \beta\|}\]	
+	\item les $\hat{U}_{(h)j}$ toujours estimé avec le co-Gini généralisé
+\end{itemize} 
+\end{itemize}
 \end{frame}
 
 
 \subsection{Résultats expérimentaux}
 
-%\begin{frame}[t]{\mysubsectiontitle}
-%	Résultats obtenus avec fastText et NBSVM
-%	\begin{table}[htb]
-%		\scriptsize
-%		\begin{center}
-%			\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%				\hline
-%				Cat. Dmd. & Algo. & {Préc.} & {Préc. équi.} & {err-0} & {err-1} & $F_1(0)$ & $F_1(1)$ & {$F_{1macro}$} \\ \hline
-%				\textit{dcppc} & NBSVM & 0.875 & 0.812 & 0 & 0.375 & 0.916 & 0.752 & \textbf{0.834} \\ \hline
-%				\textit{danais} & fastText & 0.888 & 0.5 & 0 & 1 & 0.941 & 0 & 0.47 \\ \hline
-%				\textit{danais} & NBSVM & 0.888 & 0.5 & 0 & 1 & 0.941 & 0 & 0.47 \\ \hline
-%				\textit{concdel} & fastText & 0.775 & 0.5 & 0 & 1 & 0.853 & 0 & 0.437 \\ \hline
-%				\textit{concdel} & NBSVM & 0.775 & 0.5 & 0 & 1 & 0.873 & 0 & 0.437 \\ \hline
-%				\textit{acpa} & fastText & 0.745 & 0.5 & 0 & 1 & 0.853 & 0 & 0.426 \\ \hline
-%				\textit{acpa} & NBSVM & 0.745 & 0.5 & 0 & 1 & 0.853 & 0 & 0.426 \\ \hline
-%				\textit{doris} & NBSVM & 0.5 & 0.492 & 0.167 & 0.85 & 0.63 & 0.174 & 0.402 \\ \hline
-%				\textit{dcppc} & fastText & 0.667 & 0.5 & 0 & 1 & 0.8 & 0 & 0.4 \\ \hline
-%				\textit{styx} & fastText & 0.667 & 0.5 & 0 & 1 & 0.8 & 0 & 0.4 \\ \hline
-%				\textit{styx} & NBSVM & 0.667 & 0.5 & 0 & 1 & 0.8 & 0 & 0.4 \\ \hline
-%				\textit{doris} & fastText & 0.523 & 0.5 & 0 & 1 & 0.686 & 0 & 0.343 \\ \hline
-%			\end{tabular}
-%		\end{center}
-%		0 = "rejette" et 1 == "accepte"
-%	\end{table}
-%	\scriptsize
-%	\textbf{Influence du déséquilibre et de la (très) faible taille des données}
-%\end{frame}
-
 \begin{frame}[t]{\mysubsectiontitle}
-	Comaparaison des classifieurs PLS aux classifieurs classiques
+	Comparaison des classifieurs PLS aux classifieurs classiques
 
 	\scriptsize
 	\centering
-	\begin{tabular}{|l|l|l|l|l|}
+	\begin{tabular}{|l|l|l|l|}
 		\hline
-		\textbf{Représentation} & \textbf{Algorithme} & \textbf{$F_{1}$} & $F_{1_\text{arbre}} - F_1$ & \textbf{$F_{1_\text{max}} - F_{1_\text{min}}$} \\ \hline
+		{Représentation} & {Algorithme} & {$F_{1}$} & $F_{1_\text{arbre}} - F_1$  \\ \hline
 		
-		$tf-gss$ & Arbre & 0.668 & 0 & 0.42\\ \hline
-		$tf - avg_{global}$ & LogitPLS & 0.648 & 0.02 & 0.263  \\ \hline
-		$tf - avg_{global}$ & StandardPLS & 0.636 & 0.032 & 0.346 \\ \hline
-		$tf - \Delta_{DF}$ & GiniPLS & 0.586 & 0.082 & 0.426 \\ \hline
-		$tf - \Delta_{DF}$ & GiniLogitPLS & 0.578 & 0.09 & 0.547 \\ \hline
-		- & NBSVM & 0.494 & 0.174 & 0.434  \\ \hline
-		- & fastText & 0.412 & 0.256 & 0.127 \\ \hline
+		$tf-gss$ & Arbre & 0.668 & 0\\ \hline
+		$tf - avg_{global}$ & LogitPLS & 0.648 & 0.02   \\ \hline
+		$tf - avg_{global}$ & StandardPLS & 0.636 & 0.032  \\ \hline
+		$tf - \Delta_{DF}$ & GiniPLS & 0.586 & 0.082  \\ \hline
+		$tf - \Delta_{DF}$ & GiniLogitPLS & 0.578 & 0.09  \\ \hline
+		- & NBSVM & 0.494 & 0.174   \\ \hline
+		- & fastText & 0.412 & 0.256  \\ \hline
 	\end{tabular}	
 
 \end{frame}
