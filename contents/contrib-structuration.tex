@@ -113,10 +113,7 @@ Modèles probabilistes d'étiquetage de séquences
 \begin{tabular}[]{c|c}
 \toprule
 {\textbf{HMM}} & {\textbf{CRF}} \\ \midrule
-modèle génératif 	& modèle discriminant  \\
-%\midrule		
-%"\textbf{generate}" input	& {"\textbf{condition}" on input }\\%[0.25em]
-\midrule
+%modèle génératif 	& modèle discriminant  \\ \midrule
 {un seul descripteur  par observation}	& {plusieurs descripteurs complexes par observation}\\%[0.25em]
 \midrule	
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.3cm,
@@ -154,18 +151,23 @@ $P(S,O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) P(o_t \vert s_{t})$  & $P_
 	Méthodes explorées
 	
 	\begin{itemize} \small
-		\item Descripteurs de lignes pour les sections : 
+		\item Définition de descripteurs de lignes pour les sections : 
 		 \begin{itemize}
 			\item forme : mots, longueur, etc. 
 			\item contexte : position, lignes voisines, etc.
 		 \end{itemize}
-		\item Descripteurs de mots pour les entités : 
+		\item Définition de descripteurs de mots pour les entités : 
 		\begin{itemize}
 			\item forme : est-ce une initiale ("B.") ?,  un mot clé de norme ?, etc.
 			\item contexte : mots voisins, position, etc.
 			\item syntaxe : rôle grammaticale
-		\end{itemize}
-		\item Schéma d'étiquetage : distinction des parties d'une entité {\tiny
+		\end{itemize}	
+	\item Réduction du nombre de descripteurs
+	\begin{itemize}
+		\item recherche bidirectionnelle (BDS) \cite{liu2012featureSelection}
+		\item sélection séquentielle avant à flottement (SFFS) \cite{pudil1994floatingFeatSelection}
+	\end{itemize}
+		\item Sélection du schéma d'étiquetage {\tiny
 		\begin{tabular}{l|ccccccccc}
 			& \textit{composée} & \textit{de} & \textit{Madame} & \textit{Martine} & \textit{JEAN} & , & \textit{Président} & \textit{de} & ... \\ 
 			IO & O & O & I-JUGE & I-JUGE & I-JUGE & O & I-FONCTION & I-FONCTION & ... \\
@@ -173,11 +175,6 @@ $P(S,O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) P(o_t \vert s_{t})$  & $P_
 			IEO & O & O & I-JUGE & I-JUGE & E-JUGE & O & I-FONCTION & I-FONCTION & ...\\
 			BIEO & O & O & B-JUGE & I-JUGE & E-JUGE & O & B-FONCTION & I-FONCTION & ... \\
 		\end{tabular}}
-		\item Approches de réduction du nombre de descripteurs
-		\begin{itemize}
-			\item recherche bidirectionnelle (BDS) \cite{liu2012featureSelection}
-			\item sélection séquentielle avant à flottement (SFFS) \cite{pudil1994floatingFeatSelection}
-		\end{itemize}
 	\end{itemize}	
 \end{frame}
 
@@ -193,7 +190,7 @@ $P(S,O) = \prod\limits_{t=1}^{T} P(s_t \vert s_{t-1}) P(o_t \vert s_{t})$  & $P_
 		\end{itemize}
 		\item sélection des descripteurs
 		\begin{itemize}
-			\item Lenteur des algorithmes BDS et SFFS (plus de 15h)
+			\item Lenteur des algorithmes BDS et SFFS 
 			\item BDS réduit de moitié
 			\item SFFS réduit beaucoup plus
 			\item Pas d'amélioration ou détérioration considérable de la détection

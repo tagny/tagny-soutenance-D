@@ -2,7 +2,7 @@
 \subsection{Objectif de la tâche}
 \begin{frame}[t]{\mysubsectiontitle}
 	Déterminer les situations distinctes où sont formulées les demandes d'une catégorie données
-	\begin{itemize} \scriptsize
+	\begin{itemize} \small
 		\item Exemple : catégorie "action en responsabilité civile professionnelle contre les avocats" (\textit{arcpa})
 			\begin{itemize}\scriptsize
 				\item cas $a$ : un avocat négligent qui envoie son assignation de manière tardive; 
@@ -47,10 +47,11 @@
 				\\ \hline
 			\end{tabular}
 		\end{center}
-		\caption{Terminologies de  la catégorie  $arcpa$ et de ses cas}
+		%\caption{Terminologies de  la catégorie  $arcpa$ et de ses cas}
 	\end{table}
 \end{frame}
-\begin{frame}{Sélection de la représentation : résultats}
+\begin{frame}{\mysubsectiontitle}
+	Meilleures représentations sur la catégorisation manuelle
 \begin{table}[!htb]
 	\scriptsize
 	\begin{center}
@@ -69,14 +70,15 @@
 	\end{center}
 	
 	$^a$ occurrence de mots pour $Dis_{wmd}$, et TF-IDF pour les autres distances.
-	\caption{Meilleures représentations sur la catégorisation manuelle.} \label{tab:similarite:silhouette-vecteur-manuel}
+	%\caption{Meilleures représentations sur la catégorisation manuelle.} \label{tab:similarite:silhouette-vecteur-manuel}
 \end{table}
 \end{frame}
 
-\subsection{Efficacité du regroupement}
-\begin{frame}{Regroupement pour la catégorie annotée}
+\subsection{Efficacité de la méthode proposée}
+\begin{frame}{\mysubsectiontitle}
+	Regroupement pour la catégorie annotée
 	\begin{table}[!htb]
-		\centering \scriptsize
+		\centering \tiny
 		\begin{tabular}[pos]{|l|l|c|c|c|c|c|c|c|}
 			\hline
 			{Distance}& {Algorithme}& {K}& {Silhouette}& {ARI} & {NMI} & {R} & {P} & ${F_1}$ \\ \hline
@@ -96,57 +98,57 @@
 			$Dis_{pearson}$    & K-medoïdes  & 2 & 0.171      & 0.152 & 0.166 & 0.598  & 0.482     & 0.534 \\ \hline
 			$Dis_{wmd}$      & K-medoïdes  & 2 & 0.332      & -0.016 & 0.002 & 0.545  & 0.397     & 0.459 \\ \hline
 		\end{tabular}
-		\caption{\scriptsize Evaluation de la catégorisation par K-moyennes et K-medoïdes sur ${D}_{arcpa}$ avec détermination du nombre de clusters basée sur la silhouette.} \label{tab:similarite:validation-supervisee-optKbySilhouette}
+		%\caption{\scriptsize Evaluation de la catégorisation par K-moyennes et K-medoïdes sur ${D}_{arcpa}$ avec détermination du nombre de clusters basée sur la silhouette.} \label{tab:similarite:validation-supervisee-optKbySilhouette}
 	\end{table}
 \end{frame}
 
 
-\begin{frame}[c]{Regroupement des catégories non annotées}
+\begin{frame}[c]{\mysubsectiontitle}
+	Regroupement des catégories non annotées
+	
 	\newlength{\mrcell}
 	\setlength{\mrcell}{0.8cm}
 	\begin{table}[!htb]
 		\tiny
 		\begin{center}						
 				\begin{tabular}[pos]{|l|l|l|c|c|}
-					\hline				
-					\multirow{6}{\mrcell}{${D}_{doris}$ (59)}  & $Dis_{M}$ & K-medoïdes & 2 & 0.509  \\ \cline{2-5}
-					& $Dis_{M}$ & K-moyennes & 3 & 0.527  \\ \cline{2-5}
-					& $Dis_{cosine}$ & K-medoïdes & 5 & 0.549 \\ \cline{2-5}
-					& $Dis_{cosine}$ & K-moyennes & 4 & 0.586 \\ \cline{2-5}
-					& $Dis_{jaccard}$ & K-medoïdes & 3 & 0.600 \\ \cline{2-5}
-					& $Dis_{jaccard}$ & K-moyennes & 4 & 0.645 
-					\\ \hline
+					\hline
+					$\mathcal{D}$& Distance & Algorithme& {K}  & $\bar{s}_K$  \\ \hline
+					\multirow{6}{\mrcell}{$\mathcal{D}_{concdel}$ (30)}  & $Dis_\mathcal{M}$ & K-medoïdes & 4 & 0.639  \\ \cline{2-5}
+					& $Dis_\mathcal{M}$ & K-moyennes & 4 & 0.624  \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-medoïdes & 4 & 0.675  \\ \cline{2-5}
+					& $Dis_{cosine}$ & K-moyennes & 4 & 0.632  \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-medoïdes & 5 & 0.719  \\ \cline{2-5}
+					& $Dis_{jaccard}$ & K-moyennes & 5 & 0.702\\ \hline
 				\end{tabular}
 		\end{center}						
-		\caption{\tiny Evaluation non-supervisée des K-moyennes et K-medoïdes sur ${D}_{doris}$.} \label{tab:similarite:validation-nonsupervisee}
+		%\caption{\tiny Evaluation non-supervisée des K-moyennes et K-medoïdes sur ${D}_{doris}$.} \label{tab:similarite:validation-nonsupervisee}
 	\end{table}
 	\begin{table}[ht]
 		\centering \tiny
 		\begin{tabular}{|c|p{.85\textwidth}|}
 			\hline
-			{Cluster} & \multicolumn{1}{c|}{Terminologie ($ngl$)} \\ \hline
-			\textit{0} & excéder inconvénient, inconvénient normal, excéder inconvénient normal, normal voisinage, inconvénient normal voisinage, inconvénient, trouble excéder inconvénient, trouble excéder, excéder, normal
+			{Cluster} & \multicolumn{1}{c|}{Terminologie} \\ \hline
+			\textit{0} & distinctif, reproduire, code propriété intellectuel, contrefaçon, attaque, dépôt marque, circonstance intervenir, intervenir jugement, intervenir jugement déférer, caractère distinctif
 			\\ \hline
-			\textit{1} & copropriétaire, syndicat copropriétaire, syndicat, condamner in, anormal voisinage, trouble anormal voisinage, in, trouble anormal, syndic, jouissance subir
+			\textit{1} & publicitaire, action concurrence, défaut qualité agir, action concurrence déloyal, qualité agir, fichier client, force chose juger, fonder demande titre, date transfert, celui -ci fonder
 			\\ \hline
-			\textit{2} & deux fond|fonds, séparatif deux fond|fonds, limite séparatif deux, ordonner démolition, séparatif deux, implanter, condamner démolir, devoir établir toit, devoir établir, toit manière
+			\textit{2} & acte concurrence, acte concurrence déloyal, clause non concurrence, non concurrence, clause non, entreprise concurrent, démarchage, démarcher, salarié, massif
 			\\ \hline
-			\textit{3} & manière plus, chose manière plus, chose manière, usage prohiber loi, prohiber loi règlement, prohiber loi, absolu, usage prohiber, manière plus absolu, plus absolu
-			\\ \hline
-			\textit{4} & situer zone, hauteur @card@ mètre, hauteur dépasser, appel contester, vitrer, dont hauteur dépasser, urbaniser, recevabilité <unknown> appel, cahier charge lotissement, charge lotissement
+			\textit{3} & non concurrencer, clause non concurrencer, tout droit, résilier contrat, marcher, préjudice invoquer, détournement, compte entre partie, contrat @card@ juillet, compte entre
 			\\ \hline
 		\end{tabular}
 		
 		%\textit{10 premiers termes de 1 à 3 mots sélectionnés à l'aide du coefficient de corrélation $ngl$ }
-		\caption{\tiny Terminologies des circonstances factuelles découvertes en combinant les K-medoïdes et la distance cosinus sur ${D}_{doris}$.}\label{tab:similarite:terminologie-clusters-doris}
+		%\caption{\tiny Terminologies des circonstances factuelles découvertes en combinant les K-medoïdes et la distance cosinus sur ${D}_{doris}$.}\label{tab:similarite:terminologie-clusters-doris}
 	\end{table}
 \end{frame}
 
-\begin{frame}{Résumé}
-	\begin{enumerate}
-		\item Formulation comme problème de regroupement non supervisé de décisions de la catégorie
-		\item Méthode d'apprentissage d'une distance de dis-similarité au sein d'une catégorie
-		\item Sélection de la représentation des textes qui reflète la notion subjective de similarité de l'expert
-		\item Expérimentation des propositions sur 7 catégories de demandes dont 1 annotées
-	\end{enumerate}
-\end{frame}
+%\begin{frame}{Résumé}
+%	\begin{enumerate}
+%		\item Formulation comme problème de regroupement non supervisé de décisions de la catégorie
+%		\item Méthode d'apprentissage d'une distance de dis-similarité au sein d'une catégorie
+%		\item Sélection de la représentation des textes qui reflète la notion subjective de similarité de l'expert
+%		\item Expérimentation des propositions sur 7 catégories de demandes dont 1 annotées
+%	\end{enumerate}
+%\end{frame}

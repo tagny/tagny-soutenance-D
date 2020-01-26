@@ -1,13 +1,13 @@
 \section{Identification des demandes des parties}
 \subsection{Objectif de la tâche}
 \begin{frame}[c]{\mysubsectiontitle}
-Extraction des informations sur les demandes des parties
+Extraction de données sur les demandes des parties
 \begin{itemize} \scriptsize 
 	\item Exemple : demande de dommage-intérêts pour procédure abusive
 	%danais/CASAI1401082.xml
 	\begin{itemize} \scriptsize 
-		\item Extraits de décision relatifs à la demande: 
-\fbox{\parbox{0.8\textwidth}{\scriptsize
+		\item Extrait de décision relatif à la demande: 
+\fbox{\parbox{0.8\textwidth}{\tiny
 	Jennifer M. et Catherine M. ... demandent à la Cour de :
 	
 	- \textcolor{red}{infirmer le dit jugement} en \textcolor{blue}{toutes ses dispositions} ; 
@@ -23,7 +23,7 @@ Extraction des informations sur les demandes des parties
     \item Données à extraire       
 	\end{itemize}
 \end{itemize}
- \centering{\includegraphics[width=0.85\textwidth]{tab-danais.png}}
+ \centering{\includegraphics[width=\textwidth]{tab-danais.png}}
  
  \vspace{-0.2cm}
  \begin{itemize} \scriptsize 
@@ -119,14 +119,14 @@ Extraction des informations sur les demandes des parties
 \begin{frame}[t]{\mysubsectiontitle}
 	Efficacité de la méthode
 	\begin{itemize} \scriptsize
-		\item La détection de la catégorie donne de bons résultats avec des algorithmes traditionnels (KNN, SVM, naïf bayésien, arbre) : $98.8\% \leq F_1 \leq 100\%$
+		\item Les algorithmes traditionnels (KNN, SVM, naïf bayésien, arbre) donnent de bons résultats pour la détection de la catégorie : $98.8\% \leq F_1 \leq 100\%$
 		\item Extraction :
 		{\centering{\includegraphics[width=0.9\textwidth]{f1-quanta-et-sens.pdf}}}
 		\begin{itemize} \scriptsize
 			\item Le résultat est plus accessible 
 			\item Certaines catégories (\textit{acpa, danais, styx}) sont plus accessibles que d'autres (\textit{concdel, dcppc, doris})
 		\end{itemize}				
-		\item Source d'erreurs:
+		\item Sources d'erreurs:
 		\begin{itemize} \scriptsize
 			\item Difficulté à identifier les termes-clés rares
 			\item Absence de certains quanta dans les énoncés de demandes et résultats
